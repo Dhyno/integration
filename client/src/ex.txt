@@ -1,0 +1,60 @@
+import { BrowserRouter as Router, Route, Routes, Link }from 'react-router-dom'
+// import "pages" component here
+import Home from './pages/Home';
+import About from './pages/About';
+import Profile from './pages/Profile';
+import Signin from './pages/SignIn';
+import Navigation from "./pages/Navigation";
+
+ {/* <Header /> */}
+      {/*<Landing />*/}
+      {/* <DetailProduct /> */}
+      {/* <UserChart /> */}
+      {/* <AdminData /> */}
+      {/* <AddProductAdmin /> */}
+      {/* <UserProfile /> */}
+import { useNavigate } from 'react-router-dom';
+
+function Home() {
+
+  // call that hooks here and store to variable
+  const navigate=useNavigate();
+  // create function here for handle push to another pages
+  const handleNavigateSignin = () =>{
+    navigate('/signin');
+  }
+
+function App() {
+  return (
+    // define <BrowserRouter> as parent element
+    <Router>
+      <Navigation />
+      {/* code <Routes> and <Route> below, according to path and component */}
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+        <Route path="/about" element={ <About /> } />
+        <Route path="/profile" element={ <Profile /> } />
+        <Route path="/signin" element={ <Signin /> } />
+      </Routes>
+    </Router>
+  );
+}
+
+
+// import necessary utility from rrd
+import { Outlet, Navigate } from "react-router-dom";
+
+// create component here
+import React from 'react';
+
+const PrivateRoute = () => {
+    const isLogin=false;
+    return(
+        isLogin? <Outlet /> : <Navigate to="/signin" /> 
+    );
+};
+<Route path="/" element={<PrivateRoute />}>
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/user/:id" element={<DetailUser />} />
+        </Route>

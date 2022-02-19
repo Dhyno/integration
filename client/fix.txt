@@ -1,0 +1,4 @@
+add product terlau ke atas -> done
+menu logout terlalu mepet -> done
+table kasih padding -> done
+fix bug: before show modal in landing give condition first if login true then dont show modal, if false show modal

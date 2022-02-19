@@ -1,0 +1,164 @@
+.fs-8{
+  font-size: 11.6px;
+}
+
+.lh-xs{
+  margin-top: -11px;
+  line-height: 11px;
+}
+
+.lh-s{
+  line-height: 15px;
+}
+
+.mt-s{
+  margin-top: -5px;
+}
+
+.text-order{
+  color: #469F74;
+}
+
+.text-red{
+  color: #BD0707!important;
+}
+
+.text-soft-blue{
+  color: #00D1FF;
+}
+
+.bg-soft-blue{
+  background: rgba(0, 209, 255,0.1);
+}
+
+.text-soft-red{
+  color: #974A4A;
+}
+
+.bg-red{
+  background: #BD0707!important;
+}
+
+.bg-soft-red{
+  background: #F6DADA;
+}
+
+.order-border{
+  border-radius: 20px!important;
+}
+
+.b-red{
+  border-color: #BD0707!important;
+}
+
+.w-80{
+  width: 80%;
+}
+
+.bw{
+  border-width: 4px;
+  border-style: solid;
+}
+
+.main-landing-img{
+  position: absolute;
+  right: -6rem;
+}
+
+.jumbotron{
+  position: relative!important;
+  padding: 4.5rem 1rem!important;
+}
+
+.text1:hover{
+  color: white;
+}
+
+/* table{
+  border-collapse: collapse;
+} */
+
+.income{
+  color: #061E99;
+}
+
+.wait-status{
+  color: #FF9900;
+}
+
+.success-status{
+  color: #78A85A;
+}
+
+.cancel-status{
+ color: #E83939;
+}
+
+.way-status{
+  color: #00D1FF;
+}
+
+.cancel{
+  background: #FF0742!important;
+}
+.approve{
+  background: #0ACF83!important;
+}
+
+th{
+  background: #E5E5E5;
+}
+
+table{
+  width: 100%;
+}
+
+td p{
+  /* float: left; */
+  display: inline-block;
+  margin: 0 20px!important;
+  color: white;
+  padding: 0 1em!important;
+  font-weight: 850;
+}
+
+tr,td,th{
+  border: 1px solid black;
+}
+
+.bg-soft{
+  background: rgba(224, 200, 200, 0.25);
+}
+
+.modal-next{
+  border-style: none;
+  outline: none;
+}
+
+.pop-t{
+  font-size: 28px;
+  white-space: nowrap;
+}
+
+.cursor-p{
+  cursor: pointer;
+}
+
+.toping-cnt{
+  position: relative;
+}
+
+.done-img{
+  position: absolute;
+  top: 0;
+  right: 29px;
+}
+
+.basket-fill{
+  position: absolute;
+  top: 0;
+  right: -5px;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 9px;
+}

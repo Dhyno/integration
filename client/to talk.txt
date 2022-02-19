@@ -1,0 +1,7 @@
+routing admin dan user->karena di pop up ada dua jsx maka condisikan disana ketika di klik maka component user || admin
+akan di render,kalau pakai routing agak banyak makan code.
+
+nb: belum sempat compare isi dari valu dan mendapatkan indeks sebagai admin atau user
+	algoritmanya: hanya ada satu data di static data yaitu user, disini dipastikan jika iUser true
+	maka yang dirender adalah pop data dari user, jika false maka sudah dipastikan login adalah admin
+	maka pop admin yang akan di render
