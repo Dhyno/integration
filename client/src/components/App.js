@@ -6,9 +6,11 @@ import PrivateRoute from '../route/PrivateRoute';
 
 import { BrowserRouter as Router, Route, Routes, Link }from 'react-router-dom';
 import { Header, Landing, DetailProduct,UserChart, AdminData, AddProductAdmin,AddTopingAdmin, UserProfile } from '../containerExport/forApp'
+import { ProductContextProvider } from '../context/productContext';
 
 function App() {
   return (
+    <ProductContextProvider>
       <Router>
         <Header />
         <Routes>
@@ -23,6 +25,7 @@ function App() {
             </Route>
         </Routes>
       </Router>
+    </ProductContextProvider>
   );
 }
 

@@ -51,7 +51,7 @@ exports.getToppings = async (req, res) => {
         res.status(200).send({
             status: "success",
             data: {
-                products: result
+                toppings: result
             }
         })
 
@@ -81,7 +81,7 @@ exports.getDetailTopping = async (req, res) => {
         res.status(200).send({
             status: "success",
             data: {
-                product: result
+                topping: result
             }
         })
 

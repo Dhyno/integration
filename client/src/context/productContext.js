@@ -1,21 +1,34 @@
-import { createContext,useReducer } from "react";
+import { createContext, useReducer } from "react";
 
-export const ProductContext= createContext();
+export const ProductContext = createContext();
 
-const initialState={
-    toppingCount: 0
-}
+const initialState = {
+  topingCount: 0,
+  productPrice: 0
+};
 
-const reducer = () => {
-    return console.log('test');
-}
+const reducer = (state, action) => {
+  const { type, payload } = action;
 
-export const ProductContextProvider = ( {children} ) => { 
-    const [state,dispatchProduct] = useReducer(reducer,initialState);
+  switch (type) {
+    case "ADD_TOPPING":
+        return{ ...state, topingCount: state.topingCount + 1 }
+    case "DELETE_TOPPING":
+        return{ ...state, topingCount: state.topingCount - 1 }
+    case "LOAD_PRODUCT_PRICE":
+        return console.log(payload)
+    
+    default:
+      throw new Error();
+  }
+};
 
-    return(
-        <ProductContext.Provider value={[state,dispatchProduct]} >
-            {children}
-        </ProductContext.Provider>
-    )
-}
+export const ProductContextProvider = ({ children }) => {
+  const [productState, dispatchProduct] = useReducer(reducer, initialState);
+
+  return (
+    <ProductContext.Provider value={[productState, dispatchProduct]}>
+      {children}
+    </ProductContext.Provider>
+  );
+};

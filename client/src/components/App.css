@@ -162,3 +162,7 @@ tr,td,th{
   padding: 2px 5px;
   font-size: 9px;
 }
+
+.product-detail-hero{
+  width: 500px;
+}

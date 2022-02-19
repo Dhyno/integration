@@ -7,6 +7,7 @@ import { dataLogin } from '../../data/orderDataDumies/dataLogin';
 import { topingOrder } from '../../data/orderDataDumies/topping';
 import ModalComponent from '../atomic/ModalComponent';
 import { UserContext } from '../../context/userContextt';
+import { ProductContext } from '../../context/productContext';
 
 export default function Header(){
 
@@ -23,6 +24,7 @@ export default function Header(){
     const toLogout = logout => logout ? setIsLogin(false) : handleShowToolTip();
 
     const [state, dispatch] = useContext(UserContext);
+    const [productState, dispatchProduct] = useContext(ProductContext);
 
     //TO DELETE////////////////////////////////////////////////////////////////////
     const [isLogin,setIsLogin]=useState(dataLogin.isLogin);
@@ -66,7 +68,7 @@ export default function Header(){
                         ?
                         <>< Nav.Link>
                                 <Link to={"userchart"} className='d-flex toping-cnt'>
-                                    <p className='basket-fill bg-red text-light'>{basket}</p>
+                                    <p className='basket-fill bg-red text-light'>{productState.topingCount}</p>
                                     <Image src={headerUserImage.basket}></Image>
                                 </Link>
                             </Nav.Link>
