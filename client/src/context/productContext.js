@@ -4,7 +4,7 @@ export const ProductContext = createContext();
 
 const initialState = {
   topingCount: 0,
-  totalProductPrice: 0,
+  userOrder: [],
 };
 
 const reducer = (state, action) => {
@@ -16,8 +16,8 @@ const reducer = (state, action) => {
         return{ ...state, topingCount: state.topingCount - 1 }
     case "RESET_TOPPING":
       return {...state, topingCount: 0}
-    case "LOAD_PRODUCT_PRICE":
-      return { ...state, totalProductPrice: state.totalProductPrice + 1}
+    // case "ADD_ORDER":
+    //   return{ ...state, userOrder: }
     default:
       throw new Error();
   }

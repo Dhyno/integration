@@ -19,13 +19,18 @@ export default function DetailProduct(){
     const [toppingOrder, setToppingOrder]=useState([]);
 
     const getToppingId = ( idTopping, action ) => {
-        let tempValue=[...toppingOrder]
-        if(action=="add_topping"){
+        if(action=="add_order"){
+            setToppingOrder([...toppingOrder,idTopping])
+        } else if(action=="delete_order"){
+            let tempValue=[...toppingOrder];
             tempValue=tempValue.filter( id => id!=idTopping);
-        } else if(action=="delete_topping") {
-            tempValue.push(idTopping)
+            setToppingOrder(tempValue);
         }
-        setToppingOrder(tempValue);
+        
+    }
+
+    const show = () =>{
+        console.log(toppingOrder)
     }
 
 
@@ -76,7 +81,8 @@ export default function DetailProduct(){
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Button onClick={()=>navigate('/userchart')} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button>
+                            {/* <Button onClick={()=>navigate('/userchart')} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button> */}
+                            <Button onClick={show} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button>
                         </Col>
                     </Row>
                 </Col>
