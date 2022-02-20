@@ -170,3 +170,9 @@ tr,td,th{
 .product-img{
   max-width: 400px;
 }
+
+.profile-image{
+  width: 200px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 10px rgb(100, 98, 98);
+}

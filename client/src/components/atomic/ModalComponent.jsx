@@ -15,7 +15,9 @@ export default function ModalComponent(props){
     props.getLoginModal ? conditional.loginModal=true : conditional.registerModal=true;
     //TO DELETE/////////////////////////////////////////////////////
 
-    const [state, dispatch] = useContext(UserContext)
+    const navigate=useNavigate();
+
+    const [state, dispatch] = useContext(UserContext);
 
     const [showRegister, setShowRegister] = useState(conditional.registerModal );
     const handleShowRegister = () => setShowRegister(true);
@@ -54,6 +56,8 @@ export default function ModalComponent(props){
                     payload: response.data.data,
                 });
             }
+            const ruleAdmin=response.data.data.rule;
+            ruleAdmin=="ADMIN" && navigate('/admindata')
             
         } catch(error){
             console.log(error);

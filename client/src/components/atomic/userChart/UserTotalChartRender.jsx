@@ -4,7 +4,7 @@ import deleteIcon from '../../../assets/icons/delete-icon.svg'
 
 //component to render product from userchart.jsx
 export default function UserTotalChartRender( { data } ){
-    console.log(data);
+    // console.log(data);
     return(
         <Row className='d-flex align-items-center justify-content-between mt-2 mb-4'>
             <Col md={2}>

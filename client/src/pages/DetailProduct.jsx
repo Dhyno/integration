@@ -1,10 +1,10 @@
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
-import { TopingRender, productList, productHero, topingData } from '../containerExport/exportModule';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { API } from '../config/api';
+import { useContext, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ProductContext } from '../context/productContext';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { TopingRender, productList, productHero, topingData } from '../containerExport/exportModule';
 
 export default function DetailProduct(){
     const id=useParams().id;

@@ -1,4 +1,4 @@
-import React,{ useState, useContext, useEffect } from 'react';
+import React,{ useState, useContext, useEffect, Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Popover, OverlayTrigger, Navbar, Nav, Button, Modal, Form, Image } from 'react-bootstrap';
 import { landingImages, headerUserImage } from '../atomic/getAllImages/GetImages';
@@ -18,33 +18,17 @@ export default function Header(){
     const handleModal = () => setModal(prevShow => !prevShow);
     const resetModalLogin = () => setModalLogin( prevModalLogin => !prevModalLogin)
 
-
     const [showPop, setPop] = useState(false);
     const handleShowToolTip = () => setPop(prevShow => !prevShow)
-    const toLogout = logout => logout ? setIsLogin(false) : handleShowToolTip();
 
     const [state, dispatch] = useContext(UserContext);
     const [productState, dispatchProduct] = useContext(ProductContext);
 
-    //TO DELETE////////////////////////////////////////////////////////////////////
-    const [isLogin,setIsLogin]=useState(dataLogin.isLogin);
-    const handleIsLogin =(toLogin)=> {
-        if(toLogin){
-            dataLogin.loginState(true);
-            setIsLogin(toLogin)
-         } else{
-             handleModal();
-         }
-    }
-    useEffect(()=>dataLogin.isLogin=isLogin,[isLogin]);
-    const [basket,setBasket]=useState(0);
-    useEffect(()=>{
-        topingOrder.count=basket;
-        topingOrder.getState=setBasket;
-    },[])
-    dataLogin.forceRerender=setIsLogin;//to trigger header from landing jsx
-    //TO DELETE////////////////////////////////////////////////////////////////////////////////////
-
+    const [showOrder, setShowOrder]=useState(false);
+    useEffect( () =>{
+        state.user.rule=="USER" ? setShowOrder(true) : setShowOrder(false);
+        state.isLogin && setModal(false);
+    }, [state] )
 
     const popover = (
         <Popover id='popover-positioned-bottom'>
@@ -67,10 +51,13 @@ export default function Header(){
                     
                         ?
                         <>< Nav.Link>
-                                <Link to={"userchart"} className='d-flex toping-cnt'>
-                                    <p className='basket-fill bg-red text-light'>{productState.topingCount}</p>
-                                    <Image src={headerUserImage.basket}></Image>
-                                </Link>
+                                { showOrder ? 
+                                    <Link to={"userchart"} className='d-flex toping-cnt'>
+                                        <p className='basket-fill bg-red text-light'>{productState.topingCount}</p>
+                                        <Image src={headerUserImage.basket}></Image>
+                                    </Link> : <></>
+                                }
+                                
                             </Nav.Link>
                             <OverlayTrigger show={showPop} trigger='click' placement="bottom" overlay={popover}>
                                 <Nav.Link><Image src={headerUserImage.user} onClick={handleShowToolTip}></Image></Nav.Link>
