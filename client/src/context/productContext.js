@@ -4,20 +4,18 @@ export const ProductContext = createContext();
 
 const initialState = {
   topingCount: 0,
-  productPrice: 0
+  totalProductPrice: 0,
 };
 
 const reducer = (state, action) => {
-  const { type, payload } = action;
 
-  switch (type) {
+  switch (action.type) {
     case "ADD_TOPPING":
         return{ ...state, topingCount: state.topingCount + 1 }
     case "DELETE_TOPPING":
         return{ ...state, topingCount: state.topingCount - 1 }
     case "LOAD_PRODUCT_PRICE":
-        return console.log(payload)
-    
+      return { ...state, totalProductPrice: state.totalProductPrice + 1}
     default:
       throw new Error();
   }

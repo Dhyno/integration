@@ -166,3 +166,7 @@ tr,td,th{
 .product-detail-hero{
   width: 500px;
 }
+
+.product-img{
+  max-width: 400px;
+}
