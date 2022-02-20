@@ -52,7 +52,7 @@ export default function AddProductAdmin(){
                     </Form>
                 </Col>
                 <Col md={6}>
-                    <Image className="img-fluid product-img" src={preview}></Image>
+                    <Image className="img-fluid product-img" src={preview ? preview : productImage}></Image>
                 </Col>
             </Row>
         </Container>

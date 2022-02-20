@@ -14,6 +14,8 @@ const reducer = (state, action) => {
         return{ ...state, topingCount: state.topingCount + 1 }
     case "DELETE_TOPPING":
         return{ ...state, topingCount: state.topingCount - 1 }
+    case "RESET_TOPPING":
+      return {...state, topingCount: 0}
     case "LOAD_PRODUCT_PRICE":
       return { ...state, totalProductPrice: state.totalProductPrice + 1}
     default:

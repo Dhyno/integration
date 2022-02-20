@@ -16,7 +16,20 @@ export default function DetailProduct(){
     const [productDetail,setProductDetail]=useState({});
 
     const [total, setTotal]=useState(0);
+    const [toppingOrder, setToppingOrder]=useState([]);
 
+    const getToppingId = ( idTopping, action ) => {
+        let tempValue=[...toppingOrder]
+        if(action=="add_topping"){
+            tempValue=tempValue.filter( id => id!=idTopping);
+        } else if(action=="delete_topping") {
+            tempValue.push(idTopping)
+        }
+        setToppingOrder(tempValue);
+    }
+
+
+    //set data when first loading page
     const getData = async () =>{
 
         const responseAPI=await API.get(`/product/${id}`)
@@ -28,6 +41,7 @@ export default function DetailProduct(){
     }
     useEffect(()=>{
         getData();
+        return () =>dispatchProduct({type: "RESET_TOPPING"})
     },[])
 
     return(
@@ -44,7 +58,12 @@ export default function DetailProduct(){
                             <h5 className="mb-5 fw-bold fs-4 text-soft-red">Toping</h5>
                         </Col>
                         <Row className='mb-5'>
-                            { toppings.map( ( data ) => <TopingRender price={(val)=> setTotal(total+val)} data={data} keyvalue={data.id}/> ) }
+                            { toppings.map( ( data ) => <TopingRender 
+                                price={(val)=> setTotal(total+val)} 
+                                passId={(id,action)=> getToppingId(id, action)}
+                                data={data} 
+                                keyvalue={data.id}/> 
+                            ) }
                         </Row>
                     </Row>
                     <Row>
