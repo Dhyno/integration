@@ -9,8 +9,8 @@ const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } =
 const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
     editsTransaction, deleteOneProductTransaction, addOneProductTransaction, 
     delOneProductTransactionById } = require('../controller/transaction');
-    
-const { getFixTransactions } = require('../controller/fix_transaction');
+
+const { getFixTransactions, addFixTransactions, changeFixTransaction } = require('../controller/fix_transaction');
 
 
 // import middleware here
@@ -42,7 +42,10 @@ router.delete('/delOneProductTransactionById/:id',delOneProductTransactionById);
 router.post('/addOneProductTransaction',addOneProductTransaction)
 ///////////////////////////////////////////////////////////
 
-router.get('/fix_transactions', getFixTransactions)
+//for transaction after user pay order
+router.get('/fix_transactions', getFixTransactions);
+router.post('/fix_transaction', addFixTransactions);
+router.patch('/fix_transaction/:id', changeFixTransaction);
 
 router.post('/register', register)
 router.post('/login', login)
