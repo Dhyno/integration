@@ -6,7 +6,11 @@ const router = express.Router()
 const { register, login } = require('../controller/auth')
 const { addProduct, changeProduct, delProduct, getDetailProduct, getProducts } = require('../controller/product')
 const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } = require('../controller/topping');
-const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, editsTransaction } = require('../controller/transaction');
+const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
+    editsTransaction, deleteOneProductTransaction, addOneProductTransaction, 
+    delOneProductTransactionById } = require('../controller/transaction');
+    
+const { getFixTransactions } = require('../controller/fix_transaction');
 
 
 // import middleware here
@@ -26,13 +30,19 @@ router.get('/topping/:id', getDetailTopping)
 router.patch('/topping/:id', uploadFile("image"), changeToping)
 router.delete('/topping/:id', deleteToping)
 
-
+//this for order from user or pre transaction
 router.post('/transaction',addTransaction)
 router.get('/transactions',getTransaction)
 router.get('/transaction/:idtrans',getDetailTransaction)
 router.delete('/transaction/:id',deleteTransaction);
 router.get('/my-transaction/:id',myTransaction);
 router.patch('/transaction/:id', editsTransaction)
+router.delete('/deleteOneProductTransaction',deleteOneProductTransaction);
+router.delete('/delOneProductTransactionById/:id',delOneProductTransactionById);
+router.post('/addOneProductTransaction',addOneProductTransaction)
+///////////////////////////////////////////////////////////
+
+router.get('/fix_transactions', getFixTransactions)
 
 router.post('/register', register)
 router.post('/login', login)

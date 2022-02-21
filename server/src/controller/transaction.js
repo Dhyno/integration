@@ -58,7 +58,7 @@ exports.getTransaction= async ( req, res) => {
                     model: productOrder,
                     as: "productOrder",
                     attributes: {
-                        exclude: ['createdAt','updatedAt',"idProduct","idTransaction","id"]
+                        exclude: ['createdAt','updatedAt',"idProduct","idTransaction"]
                     },
                     include: [
                         {
@@ -95,20 +95,22 @@ exports.getTransaction= async ( req, res) => {
             return{
                 id: data.id,
                 userOrder:{
-                    id: data.user.id,
+                    idUser: data.user.id,
                     fullName: data.user.name,
                     email: data.user.email
                 },
                 status: data.transactionStatus,
                 order: data.productOrder.map((data)=>{
                     return{
-                        id: data.product.id,
+                        id: data.id,
+                        idProduct: data.product.id,
                         title: data.product.name,
                         price: data.product.price,
                         image: process.env.FILE_PATH+data.product.image,
+                        qty: data.qty,
                         toppings: data.toppingOrder.map((data)=>{
                             return{
-                                id: data.toppingId,
+                                idTopping: data.toppingId,
                                 name: data.topping.name,
                                 image: process.env.FILE_PATH+data.topping.image
                             }                
@@ -431,4 +433,82 @@ exports.editsTransaction= async (req, res) => {
           message: "Server Error",
         });
     }  
+}
+
+exports.deleteOneProductTransaction= async ( req, res) => {
+    try{
+        const { idTransaction, idProduct }= req.query
+        console.log(idTransaction); 
+        console.log("here");
+        const result=await productOrder.destroy({
+            where: {//same as idTransaction: idTransaction
+                idTransaction,
+                idProduct
+            }
+        })
+        res.send({
+            statsu: "success",
+            result
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          status: "failed",
+          message: "Server Error",
+        });
+    }
+}
+
+exports.delOneProductTransactionById= async ( req, res) => {
+    try{
+        const result=await productOrder.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        res.send({
+            statsu: "success",
+            result
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          status: "failed",
+          message: "Server Error",
+        });
+    }
+}
+
+
+exports.addOneProductTransaction= async (req, res) => {
+    try{
+        const data =req.body;
+
+        console.log(data);
+        const resultProduct = await productOrder.create({
+            idTransaction: data.idTransaction,
+            idProduct: data.product.id,
+            qty: data.product.qty
+        })
+
+        data.product.topping.forEach( async idTopping =>{
+            const result=await toppingOrder.create({
+                idProductOrder: resultProduct.id,
+                toppingId: idTopping
+            })
+        })
+        
+        res.send({
+            status: "success"
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          status: "failed",
+          message: "Server Error",
+        });
+    }
 }
