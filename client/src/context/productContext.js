@@ -4,7 +4,8 @@ export const ProductContext = createContext();
 
 const initialState = {
   topingCount: 0,
-  userOrder: [],
+  haveOrder: false,
+  idTransaction: null
 };
 
 const reducer = (state, action) => {
@@ -16,8 +17,10 @@ const reducer = (state, action) => {
         return{ ...state, topingCount: state.topingCount - 1 }
     case "RESET_TOPPING":
       return {...state, topingCount: 0}
-    // case "ADD_ORDER":
-    //   return{ ...state, userOrder: }
+    case "ADD_ORDER":
+      return{ ...state, haveOrder: true, idTransaction: action.payload}
+    case "DELETE_ORDER":
+      return{ ...state, haveOrder: false, idTransaction: null}
     default:
       throw new Error();
   }

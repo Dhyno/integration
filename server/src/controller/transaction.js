@@ -8,7 +8,7 @@ exports.addTransaction = async (req,res) => {
         console.log(idUser)
 
         let getIdTransaction=await transaction.create({
-            idCustomer: idUser,
+            idCustomer: req.user.id,
             transactionStatus: "tentative"//tentative when order, on the way or else is transaction
         });
         // console.log(getIdTransaction.id);
@@ -27,7 +27,12 @@ exports.addTransaction = async (req,res) => {
         })
 
         res.status(200).send({
-            status: "success"
+            status: "success",
+            transaction: {
+                id: getIdTransaction.id,
+                idUser: getIdTransaction.idCustomer,
+                statusTransaction: getIdTransaction.transactionStatus
+            }
         })
 
     } catch (error) {
@@ -135,10 +140,12 @@ exports.getTransaction= async ( req, res) => {
 
 exports.getDetailTransaction= async (req, res) => {
     try{
-
         let result= await transaction.findOne({
+            attributes: {
+                exclude: ['createdAt','updatedAt']
+            },
             where:{
-                id: req.params.idtrans
+                id: req.params.id
             },
             include:[
                 {

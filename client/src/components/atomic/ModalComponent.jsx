@@ -5,9 +5,6 @@ import { UserContext } from "../../context/userContextt";
 import { Navigate, useNavigate } from "react-router-dom";
 
 
-import { dataLogin } from "../../data/orderDataDumies/dataLogin";
-
-
 export default function ModalComponent(props){
 
     //TO DELETE///////////////////////////////////////

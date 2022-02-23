@@ -11,7 +11,7 @@ exports.auth = (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, process.env.TOKEN_KEY); //verified token
-    req.user = verified;
+    req.user = verified;//id user from webtoken
     next(); // if token valid go to the next request
   } catch (error) {
     // if token not valid send response invalid token

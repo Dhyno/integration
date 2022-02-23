@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ProductContext } from '../context/productContext';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { TopingRender, productList, productHero, topingData } from '../containerExport/exportModule';
+import ModalQtyProduct from '../components/atomic/detailProduct/ModalQtyProduct';
 
 export default function DetailProduct(){
     const id=useParams().id;
@@ -29,11 +30,6 @@ export default function DetailProduct(){
         
     }
 
-    const show = () =>{
-        console.log(toppingOrder)
-    }
-
-
     //set data when first loading page
     const getData = async () =>{
 
@@ -48,6 +44,56 @@ export default function DetailProduct(){
         getData();
         return () =>dispatchProduct({type: "RESET_TOPPING"})
     },[])
+
+
+    const [modal, setModal]=useState(false);
+    const handleShowModal=()=> setModal( prev => !prev);//goal modal to get qty to order
+
+    const addOrder = async (qty) =>{
+        //prepare data product and topping to send to server match with endpoint in server
+        let productOrder={
+            id: id,
+            qty: qty,
+            topping: toppingOrder
+        }
+
+        const token= localStorage.getItem('token')
+
+        const config = {
+            headers: {
+              "Authorization": `Bearer ${token}`,//decode token to get id that current login
+              "Content-type": "application/json",
+            },
+          };
+
+        if(productState.haveOrder){ //if user have order but add product again in same order
+            console.log("already order idtransaction: "+ productState.idTransaction);
+            let dataToOrder={
+                idTransaction: productState.idTransaction,
+                product: productOrder
+            }
+            console.log(dataToOrder);
+            const body = JSON.stringify(dataToOrder);
+            const responseAPI=await API.post(`/addOneProductTransaction`,body,config);
+            console.log(responseAPI);
+
+        } else {
+            let listProductOrder=[productOrder];
+
+            const dataToOrder={
+                product: listProductOrder
+            }
+            
+            const body = JSON.stringify(dataToOrder);
+
+            const responseAPI=await API.post(`/transaction`,body,config);
+            // console.log(responseAPI)
+            const idTransaction=responseAPI.data.transaction.id;
+            dispatchProduct({type: "ADD_ORDER", payload: idTransaction })//give sign that current user have order and next order is add one product to transaction/order
+        }
+        return navigate('/userchart');
+    }
+
 
     return(
         <Container>
@@ -82,11 +128,44 @@ export default function DetailProduct(){
                     <Row>
                         <Col md={12}>
                             {/* <Button onClick={()=>navigate('/userchart')} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button> */}
-                            <Button onClick={show} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button>
+                            <Button onClick={handleShowModal} className="btn btn-danger w-100 my-5 bg-red">Add Chart</Button>
                         </Col>
                     </Row>
                 </Col>
             </Row>
+            
+            {modal && <ModalQtyProduct 
+                deactiveModal={ ()=>handleShowModal()}
+                getQty={(qty)=>addOrder(qty)}
+            />}
+
         </Container>
     )
 }
+
+// format toe ndpoint
+// {
+//     "user": 6,
+//     "product":[
+//         {
+//             "id": 7,
+//             "qty": 2,
+//             "topping": [10,15]
+//         },
+//         {
+//             "id": 10,
+//             "qty": 10,
+//             "topping": [12,14]
+//         }
+//     ]
+// }
+
+// {
+//     "idTransaction": 36,
+//     "product":
+//         {
+//             "id": 10,
+//             "qty": 2,
+//             "topping": [10,15]
+//         }
+// }

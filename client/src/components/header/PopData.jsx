@@ -6,11 +6,13 @@ import { useState,useContext,useEffect } from "react";
 
 import { dataLogin } from "../../data/orderDataDumies/dataLogin";
 import { UserContext } from "../../context/userContextt";
+import { ProductContext } from "../../context/productContext";
 
 //true in prop deactive for logout
 export default function PopData(props){
 
     const [state, dispatch] = useContext(UserContext);//get is admin or customer
+    const [productState, dispatchProduct] = useContext(ProductContext)
     const [isAdmin,setisAdmin]=useState(false);
 
     useEffect( ()=> state.user.rule=="ADMIN" ? setisAdmin(true) : setisAdmin(false), [] )//to get is admin or no when first load if is admin show component admin and if user show comoponent user
@@ -20,7 +22,10 @@ export default function PopData(props){
     const redirectPage = ( page, isLogout ) => {
         navigate(`${page}`); 
         props.deactivepop()//toogle pop in header 
-        isLogout=="logout" && dispatch({ type: "LOGOUT"})  //if logout true set context LOGOUT in usercontext global use conditional operator(dispatch is true)
+        if(isLogout=="logout"){
+            dispatch({ type: "LOGOUT"})  //if logout true set context LOGOUT in usercontext global use conditional operator(dispatch is true)
+            dispatchProduct({type: "DELETE_ORDER"})//delete sign that order is false 
+        }
     }
 
     return(

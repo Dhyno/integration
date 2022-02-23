@@ -12,6 +12,7 @@ const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction,
 
 const { getFixTransactions, addFixTransactions, changeFixTransaction } = require('../controller/fix_transaction');
 
+const { testFunc } = require('../controller/test');
 
 // import middleware here
 const {uploadFile} = require('../middlewares/uploadFile')
@@ -31,9 +32,9 @@ router.patch('/topping/:id', uploadFile("image"), changeToping)
 router.delete('/topping/:id', deleteToping)
 
 //this for order from user or pre transaction
-router.post('/transaction',addTransaction)
+router.post('/transaction', auth, addTransaction)
 router.get('/transactions',getTransaction)
-router.get('/transaction/:idtrans',getDetailTransaction)
+router.get('/transaction/:id',getDetailTransaction)
 router.delete('/transaction/:id',deleteTransaction);
 router.get('/my-transaction/:id',myTransaction);
 router.patch('/transaction/:id', editsTransaction)
@@ -46,6 +47,9 @@ router.post('/addOneProductTransaction',addOneProductTransaction)
 router.get('/fix_transactions', getFixTransactions);
 router.post('/fix_transaction', addFixTransactions);
 router.patch('/fix_transaction/:id', changeFixTransaction);
+////////////////////////////////////////
+
+router.get('/test',auth, testFunc);
 
 router.post('/register', register)
 router.post('/login', login)
