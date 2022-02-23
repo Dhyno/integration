@@ -17,16 +17,27 @@ module.exports = (sequelize, DataTypes) => {
           name: "idTransaction"
         }
       })
+
+      fix_transaction.belongsTo(models.user,{
+        as: "user",
+        foreignKey:{
+          name: "idUser"
+        }
+      });
+
     }
   }
   fix_transaction.init({
     idTransaction: DataTypes.INTEGER,
+    idUser: DataTypes.INTEGER,
     status: DataTypes.STRING,
+    income: DataTypes.INTEGER,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     phone: DataTypes.STRING,
     postCode: DataTypes.INTEGER,
-    addres: DataTypes.TEXT
+    address: DataTypes.TEXT,
+    attachment: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'fix_transaction',

@@ -72,7 +72,7 @@ export default function DetailProduct(){
                 idTransaction: productState.idTransaction,
                 product: productOrder
             }
-            console.log(dataToOrder);
+            // console.log(dataToOrder);
             const body = JSON.stringify(dataToOrder);
             const responseAPI=await API.post(`/addOneProductTransaction`,body,config);
             console.log(responseAPI);

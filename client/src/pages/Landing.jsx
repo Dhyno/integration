@@ -24,6 +24,7 @@ export default function Landing(){
     //get data product from api when first load
     useEffect(async ()=>{
         const response=await API.get('/products');
+        // console.log(response);
         setProduct(response.data.data.products);
     },[])
 

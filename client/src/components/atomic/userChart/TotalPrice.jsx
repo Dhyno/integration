@@ -1,8 +1,10 @@
 
+import { useState } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import invoices from '../../../assets/images/userChart/invoices.svg'
 
-export default function TotalPrice(){
+export default function TotalPrice(props){
+    const [total,setTotal]=useState(props.data);
     return(
         <Row className='border-top py-5 b-red d-flex align-items-center justify-content-between'>
             <Col md={7}>
@@ -13,9 +15,9 @@ export default function TotalPrice(){
                         <p class="fw-bold">Total</p>
                     </Col>  
                     <Col className='text-end'>
-                        <p>69.000</p>
-                        <p>2</p>
-                        <p class="fw-bold">69.000</p>
+                        <p>{props.data.totalPrice}</p>
+                        <p>{props.data.qty}</p>
+                        <p class="fw-bold">{props.data.totalPrice}</p>
                     </Col>  
                 </Row>
             </Col>

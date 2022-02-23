@@ -17,8 +17,20 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      idUser: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       status: {
         type: Sequelize.STRING
+      },
+      income: {
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING
@@ -32,8 +44,11 @@ module.exports = {
       postCode: {
         type: Sequelize.INTEGER
       },
-      addres: {
+      address: {
         type: Sequelize.TEXT
+      },
+      attachment: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

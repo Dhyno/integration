@@ -45,7 +45,7 @@ router.post('/addOneProductTransaction',addOneProductTransaction)
 
 //for transaction after user pay order
 router.get('/fix_transactions', getFixTransactions);
-router.post('/fix_transaction', addFixTransactions);
+router.post('/fix_transaction', uploadFile("attachment"), addFixTransactions);
 router.patch('/fix_transaction/:id', changeFixTransaction);
 ////////////////////////////////////////
 
