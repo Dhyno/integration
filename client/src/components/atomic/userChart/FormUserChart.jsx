@@ -14,7 +14,7 @@ export default function FormUserChart(){
                 <Form.Control type="phone" name="phone" className='b-red bg-soft-red' placeholder="Phone" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Control type="number" name="number" className='b-red bg-soft-red' placeholder="Post Code" />
+                <Form.Control type="number" name="postCode" className='b-red bg-soft-red' placeholder="Post Code" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Control as="textarea" name="adress" className='b-red bg-soft-red' rows={5} placeholder="Adress" />

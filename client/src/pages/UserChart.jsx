@@ -16,6 +16,7 @@ export default function UserChart(){
     const [product, setProduct]=useState([]);//for all img and props from api to render in UserTotalChartRender
     const [totalProduct,setTotalProduct]=useState([]);//for total product in eacth componen UserTotalChartRender
     const [allTotal,setAllTotal]=useState({});//for total price component
+    const [attachment, setAttachment]=useState(null);
 
     //for modal
     const handleCloseProcess = () =>{
@@ -24,7 +25,12 @@ export default function UserChart(){
     }
     const handleShowProcess = (e) => {
         e.preventDefault();
-        console.log(e.target);
+        console.log(e.target.name.value);
+        console.log(e.target.email.value);
+        console.log(e.target.phone.value);
+        console.log(e.target.postCode.value);
+        console.log(e.target.adress.value);
+        console.log(attachment);
         setShowProcess(true);
     }  
 
@@ -82,16 +88,15 @@ export default function UserChart(){
                         total={totalProduct[indeks]} 
                         data={ data }/> ) 
                     }
-                    <TotalPrice data={allTotal} />
+                    <TotalPrice getImage = { image=>setAttachment(image) } data={allTotal} />
                 </Col>
                 <Col md={4}>
-                    <Form>
+                    <Form onSubmit={(e)=>handleShowProcess(e)}>
                         <FormUserChart />
-                        <Button onClick={handleShowProcess} type='submit' className='bg-red text-light fw-bold w-100'>Pay</Button>
+                        <Button type='submit' className='bg-red text-light fw-bold w-100'>Pay</Button>
                     </Form>
                 </Col>
             </Row>
-
 
             <Modal show={showProcess} centered onHide={handleCloseProcess} className='d-flex align-items-center'>
                 <Modal.Body><p className='text-center pt-4 pb-2 text-order px-2'>Thank you for ordering in us, please wait to verify you order</p></Modal.Body>
