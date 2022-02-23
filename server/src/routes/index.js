@@ -8,7 +8,8 @@ const { addProduct, changeProduct, delProduct, getDetailProduct, getProducts } =
 const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } = require('../controller/topping');
 const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
     editsTransaction, deleteOneProductTransaction, addOneProductTransaction, 
-    delOneProductTransactionById } = require('../controller/transaction');
+    delOneProductTransactionById, 
+    getDetailTransactionByToken} = require('../controller/transaction');
 
 const { getFixTransactions, addFixTransactions, changeFixTransaction } = require('../controller/fix_transaction');
 
@@ -49,9 +50,13 @@ router.post('/fix_transaction', uploadFile("attachment"), addFixTransactions);
 router.patch('/fix_transaction/:id', changeFixTransaction);
 ////////////////////////////////////////
 
-router.get('/test',auth, testFunc);
-
 router.post('/register', register)
 router.post('/login', login)
+
+//list of add route match with design fe
+router.get('/transactionbytoken',auth,getDetailTransactionByToken)
+
+router.get('/test',auth, testFunc);
+
 
 module.exports = router

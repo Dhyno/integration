@@ -159,7 +159,7 @@ exports.getDetailTransaction= async (req, res) => {
                     model: productOrder,
                     as: "productOrder",
                     attributes: {
-                        exclude: ['createdAt','updatedAt',"idProduct","idTransaction","id"]
+                        exclude: ['createdAt','updatedAt',"idProduct","idTransaction"]
                     },
                     include: [
                         {
@@ -200,7 +200,8 @@ exports.getDetailTransaction= async (req, res) => {
             status: result.transactionStatus,
             order:result.productOrder.map((data)=>{
                 return{
-                    id: data.product.id,
+                    idProductOrder: data.id,
+                    idProduct: data.product.id,
                     title: data.product.name,
                     price: data.product.price,
                     image: data.product.image,
@@ -510,6 +511,104 @@ exports.addOneProductTransaction= async (req, res) => {
         
         res.send({
             status: "success"
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          status: "failed",
+          message: "Server Error",
+        });
+    }
+}
+
+
+exports.getDetailTransactionByToken= async (req, res) => {
+    try{
+        console.log(req.user.id);
+        let result= await transaction.findAll({
+            attributes: {
+                exclude: ['createdAt','updatedAt']
+            },
+            where:{
+                idCustomer: req.user.id,
+                transactionStatus: "tentative"
+            },
+            include:[
+                {
+                    model: user,
+                    as: "user",
+                    attributes: {
+                        exclude: ['createdAt','updatedAt','password']
+                    }
+                },
+                {
+                    model: productOrder,
+                    as: "productOrder",
+                    attributes: {
+                        exclude: ['createdAt','updatedAt',"idProduct","idTransaction","id"]
+                    },
+                    include: [
+                        {
+                            model: product,
+                            as: "product",
+                            attributes: {
+                                exclude: ['createdAt','updatedAt']
+                            },
+                        },
+                        {
+                            model: toppingOrder,
+                            as: "toppingOrder",
+                            attributes: {
+                                exclude: ['createdAt','updatedAt',"idProductOrder","id"]
+                            },
+                            include:[
+                                {
+                                    model: topping,
+                                    as: "topping",
+                                    attributes: {
+                                        exclude: ['createdAt','updatedAt',"idProductOrder","id"]
+                                    },
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        })
+
+        result=result.map((data)=>{
+            return{
+                idTransaction: data.id,
+                userOrder:{
+                    idUser: data.user.id,
+                    fullName: data.user.name,
+                    email: data.user.email
+                },
+                status: data.transactionStatus,
+                order: data.productOrder.map((data)=>{
+                    return{
+                        idProduct: data.id,
+                        idProduct: data.product.id,
+                        title: data.product.name,
+                        price: data.product.price,
+                        image: process.env.FILE_PATH+data.product.image,
+                        qty: data.qty,
+                        toppings: data.toppingOrder.map((data)=>{
+                            return{
+                                idTopping: data.toppingId,
+                                name: data.topping.name,
+                                image: process.env.FILE_PATH+data.topping.image
+                            }                
+                        })
+                    }
+                })
+            }
+        })
+
+        res.status(200).send({
+            message: "succes",
+            result
         })
 
     } catch (error) {
