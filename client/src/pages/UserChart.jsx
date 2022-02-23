@@ -20,25 +20,32 @@ export default function UserChart(){
     //for modal
     const handleCloseProcess = () =>{
         setShowProcess(false);
-        navigate('/');
+        // navigate('/');
     }
     const handleShowProcess = (e) => {
         e.preventDefault();
+        console.log(e.target);
         setShowProcess(true);
     }  
+
+    const confirmDeleteProduct = async id => {
+        const response=await API.delete(`/delOneProductTransactionById/${id}`);//delete product id in productorder table
+        console.log(response);
+        getData();//re render page
+    }
 
     const getData = async () => {
         try{
             const idTransaction=productState.idTransaction
-            const responseAPI= await API.get(`/transaction/${1}`)
-            // console.log(responseAPI);
+            const responseAPI= await API.get(`/transaction/${idTransaction}`)
+            console.log(responseAPI);
             let getProduct=responseAPI.data.resultToSend.order;
             setProduct(getProduct);
 
             //get total price with c style 
             let totalPriceProduct=[];
             let totalPriceAll=0;
-            //this code is c ways lol
+            //tcode with c ways
             for(let i=0; i<getProduct.length;i++){
                 let total=getProduct[i].price;
                 for(let j=0; j<getProduct[i].toppings.length; j++){
@@ -60,6 +67,7 @@ export default function UserChart(){
         }
     }
     useEffect(()=>{
+        console.log("in userchar: "+productState.idTransaction)
         getData();
     },[])
     
@@ -69,7 +77,11 @@ export default function UserChart(){
             <h5 className='pb-2'>Review Your Order</h5>
             <Row className='d-flex justify-content-between'>
                 <Col md={7} className='border-top b-red'>
-                    { product.map( ( data,indeks )  => <UserTotalChartRender key={data.id} total={totalProduct[indeks]} data={ data }/> ) }
+                    { product.map( ( data,indeks )  => <UserTotalChartRender 
+                        getKeyId={(id)=>confirmDeleteProduct(id)}
+                        total={totalProduct[indeks]} 
+                        data={ data }/> ) 
+                    }
                     <TotalPrice data={allTotal} />
                 </Col>
                 <Col md={4}>

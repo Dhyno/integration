@@ -6,21 +6,35 @@ import { landingImages, productList, OrderList} from '../containerExport/exportM
 import { dataLogin } from '../data/orderDataDumies/dataLogin';
 import { UserContext } from '../context/userContextt';
 import { API } from '../config/api';
+import { ProductContext } from '../context/productContext';
+import ModalConfirmUserOrder from '../components/atomic/landing/ModalConfirmUserOrder';
 
 export default function Landing(){
 
     const navigate=useNavigate();
 
     const [state, dispatch] = useContext(UserContext)//get is userlogin or false to condition toogle if it show or no
+    const [productState, dispatchProduct] = useContext(ProductContext)//to check if user have order before then blok him/her
+                                                                    //till user confirm it
     const [showModal, setModal] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);//pass to props to get modal is login or register
     const resetModalLogin = () => setModalLogin( prevModalLogin => !prevModalLogin);
     const handleModal = () => state.isLogin ? setModal(false) : setModal(prevShow => !prevShow);//if login true always set modal to false
-
+    
     const [product,setProduct]=useState([])
+    
+    const [showWarning,setShowWarning]=useState(false);
+    const handleShowWarning = () => setShowWarning(prev=>!prev)
+    const getClickKey =  keyval => {
+        if(state.isLogin){
+            if(productState.haveOrder){
+                return handleShowWarning();
+            }
 
-    const getClickKey = keyval => state.isLogin && navigate(`/detailproduct/${keyval}`)//if login true then navigate to detail product page
-
+            navigate(`/detailproduct/${keyval}`)
+        }
+    }//if login true then navigate to detail product page
+    
     //get data product from api when first load
     useEffect(async ()=>{
         const response=await API.get('/products');
@@ -62,6 +76,16 @@ export default function Landing(){
                     handleModal();
                 }}
             />}
+
+            {
+                showWarning && <ModalConfirmUserOrder
+                    deactivemodal={()=>{
+                        handleShowWarning();
+                        navigate('/userchart');
+                    }}
+                />
+            }
+
         </Container>
     );
 }

@@ -3,6 +3,7 @@ import { Form, Modal, Button } from "react-bootstrap";
 import { API } from "../../config/api";
 import { UserContext } from "../../context/userContextt";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ProductContext } from "../../context/productContext";
 
 
 export default function ModalComponent(props){
@@ -15,6 +16,7 @@ export default function ModalComponent(props){
     const navigate=useNavigate();
 
     const [state, dispatch] = useContext(UserContext);
+    const [productState, dispatchProduct] = useContext(ProductContext);
 
     const [showRegister, setShowRegister] = useState(conditional.registerModal );
     const handleShowRegister = () => setShowRegister(true);
@@ -54,7 +56,29 @@ export default function ModalComponent(props){
                 });
             }
             const ruleAdmin=response.data.data.rule;
-            ruleAdmin=="ADMIN" && navigate('/admindata')
+            
+            if(ruleAdmin=="ADMIN"){
+                return navigate('/admindata')
+
+            } else{//if rule as user then check if user have order before if order exist user must confirm it and blocked to order till confirm previous order
+                const token= localStorage.getItem('token')
+                const config = {
+                    headers: {
+                    "Authorization": `Bearer ${token}`,//decode token to get id that current login
+                    },
+                };
+                const response=await API.get('/transactionbytoken',config);//check if user have order before user must confirm it
+                console.log(response);
+                let result=response.data.result;
+                for(let i=0; i<result.length; i++){
+                    if(result[i].status=="tentative"){
+                        console.log("caught in modal id Transaction is: "+result[i].idTransaction);
+                        const idTransaction=result[i].idTransaction;
+                        dispatchProduct({type: "ADD_ORDER", payload: idTransaction })//set id order that hvnt confirm to global context
+                        return;
+                    }
+                }
+            }
             
         } catch(error){
             console.log(error);

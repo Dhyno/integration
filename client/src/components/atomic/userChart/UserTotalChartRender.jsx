@@ -4,16 +4,17 @@ import { Row, Col,Image } from "react-bootstrap";
 import deleteIcon from '../../../assets/icons/delete-icon.svg'
 
 //component to render product from userchart.jsx
-export default function UserTotalChartRender( { data, total } ){
+export default function UserTotalChartRender( { data, total, getKeyId } ){
 
     const image=`http://localhost:5000/uploads/${data.image}`;
     const [topping,setTopping]=useState([])
     const [gettotal, setGetTotal]=useState(0);
 
+    const toDelete = () => getKeyId(data.idProductOrder);//pass key id to parenth to re render state
+
     useEffect(()=>{
         setTopping(data.toppings);
         setGetTotal(total);
-        // console.log(data)
     },[])
 
     return(
@@ -27,7 +28,7 @@ export default function UserTotalChartRender( { data, total } ){
             </Col>
             <Col className='text-end'>
                 <p>{total}</p>
-                <Image src={deleteIcon}></Image>
+                <Image onClick={toDelete} className="cursor-p" src={deleteIcon}></Image>
             </Col>
         </Row>
     );
