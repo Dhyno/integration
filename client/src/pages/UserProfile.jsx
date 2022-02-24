@@ -1,7 +1,26 @@
+import { useEffect } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Profile, Transaction } from '../containerExport/exportModule';
+import { API } from '../config/api';
 
 export default function UserProfile(){
+
+    
+
+    const getData = async () =>{
+        const token= localStorage.getItem('token')
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,//decode token to get id that current login
+            },
+        };
+        const response= await API.get('/my-fix_transaction',config);
+        
+    }
+    useEffect(()=>{
+        getData();      
+    },[])
+
     return(
         <Container className='my-5 '>
             <Row>

@@ -21,16 +21,34 @@ export default function UserChart(){
     //for modal
     const handleCloseProcess = () =>{
         setShowProcess(false);
-        // navigate('/');
+        navigate('/user');
     }
-    const handleShowProcess = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target.name.value);
-        console.log(e.target.email.value);
-        console.log(e.target.phone.value);
-        console.log(e.target.postCode.value);
-        console.log(e.target.adress.value);
-        console.log(attachment);
+
+        const idTransaction=productState.idTransaction
+        const token= localStorage.getItem('token')
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,//decode token to get id that current login
+                "Content-type": "multipart/form-data",
+            },
+        };
+
+        let formFile= new FormData();
+        formFile.set("idTransaction",idTransaction)
+        formFile.set("status", "Waiting Approve")
+        formFile.set("income", allTotal.totalPrice)
+        formFile.set("name", e.target.name.value)
+        formFile.set("email", e.target.email.value)
+        formFile.set("phone", e.target.phone.value)
+        formFile.set("postCode", e.target.postCode.value)
+        formFile.set("address", e.target.adress.value)
+        formFile.set("attachment", attachment);
+
+        const response=await API.post('/fix_transaction', formFile, config);
+        console.log(response);
+        dispatchProduct({type: "DELETE_ORDER"})//delete sign that order is false
         setShowProcess(true);
     }  
 
@@ -91,7 +109,7 @@ export default function UserChart(){
                     <TotalPrice getImage = { image=>setAttachment(image) } data={allTotal} />
                 </Col>
                 <Col md={4}>
-                    <Form onSubmit={(e)=>handleShowProcess(e)}>
+                    <Form onSubmit={(e)=>handleSubmit(e)}>
                         <FormUserChart />
                         <Button type='submit' className='bg-red text-light fw-bold w-100'>Pay</Button>
                     </Form>
