@@ -176,3 +176,7 @@ tr,td,th{
   border-radius: 20px;
   box-shadow: 1px 1px 10px rgb(100, 98, 98);
 }
+
+.tr-profile-img{
+  max-width: 80px;
+}

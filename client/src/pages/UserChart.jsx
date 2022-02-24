@@ -16,7 +16,7 @@ export default function UserChart(){
     const [product, setProduct]=useState([]);//for all img and props from api to render in UserTotalChartRender
     const [totalProduct,setTotalProduct]=useState([]);//for total product in eacth componen UserTotalChartRender
     const [allTotal,setAllTotal]=useState({});//for total price component
-    const [attachment, setAttachment]=useState(null);
+    const [attachment, setAttachment]=useState(null);//get image attachment from user
 
     //for modal
     const handleCloseProcess = () =>{
