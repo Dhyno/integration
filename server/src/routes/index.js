@@ -11,7 +11,7 @@ const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction,
     delOneProductTransactionById, 
     getDetailTransactionByToken} = require('../controller/transaction');
 
-const { getFixTransactions, addFixTransactions, changeFixTransaction } = require('../controller/fix_transaction');
+const { getFixTransactions, addFixTransactions, changeFixTransaction, getDetailFixTransactions } = require('../controller/fix_transaction');
 
 const { testFunc } = require('../controller/test');
 
@@ -45,8 +45,9 @@ router.post('/addOneProductTransaction',addOneProductTransaction)
 ///////////////////////////////////////////////////////////
 
 //for transaction after user pay order
-router.get('/fix_transactions', getFixTransactions);
-router.post('/fix_transaction', uploadFile("attachment"), addFixTransactions);
+router.get('/fix_transactions', getFixTransactions);//get all id transaction for admin
+router.get('/my-fix_transaction',auth, getDetailFixTransactions)//get all user login transaction for user that curretn login
+router.post('/fix_transaction',auth, uploadFile("attachment"), addFixTransactions);
 router.patch('/fix_transaction/:id', changeFixTransaction);
 ////////////////////////////////////////
 

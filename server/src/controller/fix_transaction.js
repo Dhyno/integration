@@ -103,13 +103,11 @@ exports.getFixTransactions= async (req, res) => {
 
 exports.getDetailFixTransactions= async (req, res) => {
     try{
+        // console.log(req.user);
 
         let result= await fix_transaction.findAll({
             where: {
-                idUser: req.params.id
-            },
-            attributes:{
-                exclude: ['createdAt','updatedAt']
+                idUser: req.user.id
             },
             include:[
                 {
@@ -168,6 +166,7 @@ exports.getDetailFixTransactions= async (req, res) => {
                 postCode: data.postCode,
                 address: data.address, 
                 attachment: process.env.FILE_PATH +data.attachment,
+                orderAt:data.createdAt,
                 order: data.transaction.productOrder.map( data =>{
                 return{
                     id: data.id,
@@ -208,12 +207,28 @@ exports.getDetailFixTransactions= async (req, res) => {
 exports.addFixTransactions= async (req, res) => {
     try{
 
+        // console.log(req.user.id);
+        // console.log(req.file)
+
+        // console.log(req.body);
+
+        // let data=req.body;
         let data=req.body;
 
         let result = await fix_transaction.create({
             ...data,
+             idUser: req.user.id,
             attachment: req.file.filename,
         })
+
+        await transaction.update(
+            { transactionStatus: req.body.status  },
+            {
+                where: {
+                    id: req.body.idTransaction
+                }
+            }
+        )
 
         result = JSON.parse(JSON.stringify(result))
 
