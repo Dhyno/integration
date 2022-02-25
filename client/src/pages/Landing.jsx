@@ -23,22 +23,22 @@ export default function Landing(){
     
     const [product,setProduct]=useState([])
     
-    const [showWarning,setShowWarning]=useState(false);
-    const handleShowWarning = () => setShowWarning(prev=>!prev)
+    const [showWarning,setShowWarning]=useState( { modal: false, idProduct: null});//modal show to user he/she have already order before
+
     const getClickKey =  keyval => {
         if(state.isLogin){
             if(productState.haveOrder){
-                return handleShowWarning();
+                return setShowWarning({idProduct: keyval,modal: true});//show modal warning and pass idproduct to it and in modal navigate to detail product that have pass to it
+            } else{
+                navigate(`/detailproduct/${keyval}`)
             }
 
-            navigate(`/detailproduct/${keyval}`)
         }
     }//if login true then navigate to detail product page
     
     //get data product from api when first load
     useEffect(async ()=>{
         const response=await API.get('/products');
-        // console.log(response);
         setProduct(response.data.data.products);
     },[])
 
@@ -77,14 +77,7 @@ export default function Landing(){
                 }}
             />}
 
-            {
-                showWarning && <ModalConfirmUserOrder
-                    deactivemodal={()=>{
-                        handleShowWarning();
-                        navigate('/userchart');
-                    }}
-                />
-            }
+            { showWarning.modal && <ModalConfirmUserOrder idProduct= { showWarning.idProduct }/> }
 
         </Container>
     );

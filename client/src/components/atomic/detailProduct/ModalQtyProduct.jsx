@@ -15,14 +15,14 @@ export default function ModalQtyProduct(props){
 
     return(
         <>
-            <Modal show={showQty} size="sm" centered onHide={handleCloseQty} className='rounded order-border'>
+            <Modal show={showQty} size="sm" centered onHide={handleCloseQty} className='py-5'>
                 <Modal.Body className="text-center"> 
-                    <h2 className='text-red py-4 fw-bold'>qty</h2>
-                    <span onClick={increment}> + </span>
-                    <h4> {count} </h4>
-                    <span onClick={decrement}> - </span>
-                    <h4></h4>
-                    <span className='modal-next fw-bold cursor-p' onClick={handleCloseQty}> ok</span> 
+                    <h2 className=' mb-4 fw-bold opacity-50 text-soft-red'>Quantity</h2>
+                    <button className="qty bg-purple-soft" onClick={increment}> + </button>
+                    <span className="fw-bold fs-2 "> {count} </span>
+                    <button className="qty bg-red-soft" onClick={decrement}> - </button>
+                    <h4 className="mb-5"></h4>
+                    <span className='fw-bold cursor-p modal-next fw-bold cursor-p py-2 px-4 bg-soft-red mb-4' onClick={handleCloseQty}> ok</span> 
                 </Modal.Body>
             </Modal> 
         </>

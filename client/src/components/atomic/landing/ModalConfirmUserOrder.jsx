@@ -1,20 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ModalConfirmUserOrder(props){
-    const [showWarning, setShowWarning] = useState(true);
-    const handleCloseShowWarning = () => setShowWarning(false);
 
-    //decative modal and pass count to parenth
-    useEffect( ()=> !showWarning && props.deactivemodal() , [showWarning])
+    const navigate=useNavigate();
+
+    const [showWarning, setShowWarning] = useState(true);
+    const handleCloseShowWarning = () => {
+        setShowWarning(false);
+        return navigate(`/detailproduct/${props.idProduct}`)//navigate to detailproduct and close modal
+    }
 
     return(
         <>
-            <Modal show={showWarning} size="sm" centered onHide={handleCloseShowWarning} className='rounded order-border'>
+            <Modal show={showWarning} size="sm" centered onHide={handleCloseShowWarning}>
                 <Modal.Body className="text-center"> 
-                    <h2 className='text-red py-4 fw-bold'>Please Confirm Your Previous ORder</h2>
-                    <span className='modal-next fw-bold cursor-p' onClick={handleCloseShowWarning}>click here</span> 
+                    <h5 className='py-4 fw-bold opacity-75 text-soft-red'>Product will add to your previous order</h5>
+                    <span className='modal-next fw-bold cursor-p py-2 px-4 bg-soft-red' onClick={handleCloseShowWarning}>Okay</span> 
                 </Modal.Body>
             </Modal> 
         </>

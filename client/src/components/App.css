@@ -31,6 +31,14 @@
   background: rgba(0, 209, 255,0.1);
 }
 
+.bg-purple-soft{
+  background-color: rgb(143, 186, 241);
+}
+
+.bg-red-soft{
+  background-color: rgb(209, 55, 55)
+}
+
 .text-soft-red{
   color: #974A4A;
 }
@@ -133,6 +141,10 @@ tr,td,th{
 .modal-next{
   border-style: none;
   outline: none;
+  color: black;
+  border-radius: 10px;
+  opacity: 60%;
+  transition: 0.2s ease;
 }
 
 .pop-t{
@@ -179,4 +191,21 @@ tr,td,th{
 
 .tr-profile-img{
   max-width: 80px;
+}
+
+.modal-next:hover{
+  background-color: rgb(209, 55, 55);
+  color: white;
+}
+
+.qty{
+  display: inline-block;
+  outline: none;
+  border-style: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: 850;
+  margin: 0 10%;
+  padding: 0 10px;
+  text-align: center;
 }

@@ -42,6 +42,7 @@ export default function DetailProduct(){
     }
     useEffect(()=>{
         getData();
+        console.log(productState.idTransaction);
         return () =>dispatchProduct({type: "RESET_TOPPING"})
     },[])
 
@@ -68,30 +69,31 @@ export default function DetailProduct(){
 
         if(productState.haveOrder){ //if user have order but add product again in same order
             console.log("already order idtransaction: "+ productState.idTransaction);
-            let dataToOrder={
-                idTransaction: productState.idTransaction,
-                product: productOrder
-            }
-            // console.log(dataToOrder);
-            const body = JSON.stringify(dataToOrder);
-            const responseAPI=await API.post(`/addOneProductTransaction`,body,config);
-            console.log(responseAPI);
+            // let dataToOrder={
+            //     idTransaction: productState.idTransaction,
+            //     product: productOrder
+            // }
+            // // console.log(dataToOrder);
+            // const body = JSON.stringify(dataToOrder);
+            // const responseAPI=await API.post(`/addOneProductTransaction`,body,config);
+            // console.log(responseAPI);
 
         } else {
-            let listProductOrder=[productOrder];
+            console.log("no yet order: "+ productState.idTransaction);
+            // let listProductOrder=[productOrder];
 
-            const dataToOrder={
-                product: listProductOrder
-            }
+            // const dataToOrder={
+            //     product: listProductOrder
+            // }
             
-            const body = JSON.stringify(dataToOrder);
+            // const body = JSON.stringify(dataToOrder);
 
-            const responseAPI=await API.post(`/transaction`,body,config);
-            // console.log(responseAPI)
-            const idTransaction=responseAPI.data.transaction.id;
-            dispatchProduct({type: "ADD_ORDER", payload: idTransaction })//give sign that current user have order and next order is add one product to transaction/order
+            // const responseAPI=await API.post(`/transaction`,body,config);
+            // // console.log(responseAPI)
+            // const idTransaction=responseAPI.data.transaction.id;
+            // dispatchProduct({type: "ADD_ORDER", payload: idTransaction })//give sign that current user have order and next order is add one product to transaction/order
         }
-        return navigate('/userchart');
+        // return navigate('/userchart');
     }
 
 

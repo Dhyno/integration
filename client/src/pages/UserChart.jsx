@@ -47,7 +47,7 @@ export default function UserChart(){
         formFile.set("attachment", attachment);
 
         const response=await API.post('/fix_transaction', formFile, config);
-        console.log(response);
+        // console.log(response);
         dispatchProduct({type: "DELETE_ORDER"})//delete sign that order is false
         setShowProcess(true);
     }  
@@ -91,7 +91,7 @@ export default function UserChart(){
         }
     }
     useEffect(()=>{
-        console.log("in userchar: "+productState.idTransaction)
+        // console.log("in userchar: "+productState.idTransaction)
         getData();
     },[])
     
