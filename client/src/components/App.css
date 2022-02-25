@@ -141,9 +141,9 @@ tr,td,th{
 .modal-next{
   border-style: none;
   outline: none;
-  color: black;
+  color: white;
   border-radius: 10px;
-  opacity: 60%;
+  background-color: rgb(209, 55, 55);
   transition: 0.2s ease;
 }
 
@@ -193,11 +193,6 @@ tr,td,th{
   max-width: 80px;
 }
 
-.modal-next:hover{
-  background-color: rgb(209, 55, 55);
-  color: white;
-}
-
 .qty{
   display: inline-block;
   outline: none;
@@ -208,4 +203,37 @@ tr,td,th{
   margin: 0 10%;
   padding: 0 10px;
   text-align: center;
+}
+
+.status1{
+  background-color: rgba(255, 153, 0,0.2);
+}
+
+.status2{
+  background-color: rgba(120, 168, 90,0.1);
+}
+
+.status3{
+ background: rgba(232, 57, 57,0.1);
+}
+
+.status4{
+  background-color: rgb(0, 209, 255,0.1);
+}
+
+.edit-profile{
+  height: 20px;
+  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.356))
+}
+
+.input-profile{
+  border-radius: 20px;
+  border: 1px solid rgb(161, 157, 157);
+  outline: none;
+  padding: 2px 10px;
+}
+
+.modal-next:hover{
+  opacity: 60%;
+  color: black;
 }

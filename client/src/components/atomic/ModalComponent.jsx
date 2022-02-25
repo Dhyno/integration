@@ -131,7 +131,7 @@ export default function ModalComponent(props){
                         <Button type="submit" className='bg-red mb-2 text-light b-red w-100 py-2 fw-bold'>Register</Button>
                     </Form> 
                     <p className='fw-bold text-center'>Already have an account ? Klik
-                        <span className='modal-next fw-bold cursor-p' onClick={ ()=>{ handleCloseRegister(); handleShowLogin(); }}> Here</span> 
+                        <span className='fw-bold cursor-p' onClick={ ()=>{ handleCloseRegister(); handleShowLogin(); }}> Here</span> 
                     </p>
                 </Modal.Body>
             </Modal> 
@@ -144,7 +144,7 @@ export default function ModalComponent(props){
                         <Button type="submit" className='bg-red mb-2 text-light b-red w-100 py-2 fw-bold'> Login </Button>
                     </Form>
                     <p className='fw-bold text-center'>Dont have an account ? Klik
-                        <span className='modal-next fw-bold cursor-p' onClick={()=>{handleCloseLogin(); handleShowRegister(); }}> Here</span> 
+                        <span className='fw-bold cursor-p' onClick={()=>{handleCloseLogin(); handleShowRegister(); }}> Here</span> 
                     </p>
                 </Modal.Body>
             </Modal>

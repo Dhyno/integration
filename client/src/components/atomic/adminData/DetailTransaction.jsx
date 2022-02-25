@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Image, Carousel } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { userImages } from "../getAllImages/GetImages";
 
 
 //componen use for page prodile user and admin page
-export default function Transaction( { data } ){
+export default function DetailTransaction( { data } ){
 
+    const [status, setStatus]=useState(null)
     const [order, setOrder]=useState([])
     const [totalOne, setTotalOne]=useState([]);
-    const [status, setStatus]=useState({});
 
     const show = ()=> {
         // order.map( data => {
@@ -17,10 +17,7 @@ export default function Transaction( { data } ){
     }
 
     useEffect(()=> {
-        data.status=="Waiting Approve" && setStatus({waiting:true});
-        data.status=="Cancel" && setStatus({cancel:true});
-        data.status=="On The Way" && setStatus({onTheWay:true});
-
+        data.status=="Waiting Approve" && setStatus("Process");
         setOrder(data.order)
         let totalAll=[];
         for(let i=0; i<data.order.length; i++){
@@ -38,7 +35,7 @@ export default function Transaction( { data } ){
 
     return(
         <>
-            <Col md={8} className="order-border">
+            <Col md={8}>
                 <Row className="mb-4 d-flex align-items-center justify-content-center">
                     {
                         order.map( ( data, i ) => {
@@ -79,10 +76,7 @@ export default function Transaction( { data } ){
                 </Row>
                 <Row>
                     <Col>
-                        { status.success && <p onClick={show} className={`fs-8 success-status status2 py-2 fw-bold`}>Success</p> }
-                        { status.cancel && <p onClick={show} className={`fs-8 cancel-status status3 py-2 fw-bold`}>Cancel</p> }
-                        { status.onTheWay && <p onClick={show} className={`fs-8 way-status status4 py-2 fw-bold`}>On The Way</p> }
-                        { status.waiting && <p onClick={show} className={`fs-8 wait-status status1 py-2 fw-bold`}>Process</p> }
+                        <p onClick={show} className='fs-8 text-soft-blue bg-soft-blue py-2 fw-bold'>{data.status}</p>
                         <p className='fs-8 text-soft-red fw-bold'>Total : {data.income}</p>
                     </Col>
                 </Row>

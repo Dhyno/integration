@@ -181,6 +181,7 @@ exports.getDetailFixTransactions= async (req, res) => {
                         return{
                             idTopping: data.toppingId,
                             name: data.topping.name,
+                            price: data.topping.price,
                             image: process.env.FILE_PATH+data.topping.image
                         }                
                     })

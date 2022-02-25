@@ -24,7 +24,7 @@ export default function UserTotalChartRender( { data, total, getKeyId } ){
             </Col>
             <Col md={8}>
                 <p class="fw-bold">{data.title}</p>
-                <p> Toping : { topping.map( data => ( <span> { data.name } , </span> )) } </p>  
+                <p> Toping : { topping.map( topingName => ( <span> { topingName.name } , </span> )) } </p>  
             </Col>
             <Col className='text-end'>
                 <p>{total}</p>

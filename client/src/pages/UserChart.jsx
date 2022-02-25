@@ -62,7 +62,7 @@ export default function UserChart(){
         try{
             const idTransaction=productState.idTransaction
             const responseAPI= await API.get(`/transaction/${idTransaction}`)
-            console.log(responseAPI);
+            // console.log(responseAPI);
             let getProduct=responseAPI.data.resultToSend.order;
             setProduct(getProduct);
 

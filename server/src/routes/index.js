@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 //Ccontroller
-const { register, login } = require('../controller/auth')
+const { register, login, changeName } = require('../controller/auth')
 const { addProduct, changeProduct, delProduct, getDetailProduct, getProducts } = require('../controller/product')
 const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } = require('../controller/topping');
 const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
@@ -53,6 +53,7 @@ router.patch('/fix_transaction/:id', changeFixTransaction);
 
 router.post('/register', register)
 router.post('/login', login)
+router.post('/profile', changeName);
 
 //list of add route match with design fe
 router.get('/transactionbytoken',auth,getDetailTransactionByToken)

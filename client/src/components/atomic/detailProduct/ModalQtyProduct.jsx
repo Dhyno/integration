@@ -22,7 +22,7 @@ export default function ModalQtyProduct(props){
                     <span className="fw-bold fs-2 "> {count} </span>
                     <button className="qty bg-red-soft" onClick={decrement}> - </button>
                     <h4 className="mb-5"></h4>
-                    <span className='fw-bold cursor-p modal-next fw-bold cursor-p py-2 px-4 bg-soft-red mb-4' onClick={handleCloseQty}> ok</span> 
+                    <span className='fw-bold opacity-50 cursor-p modal-next fw-bold cursor-p py-2 px-4 bg-soft-red mb-4' onClick={handleCloseQty}> ok</span> 
                 </Modal.Body>
             </Modal> 
         </>

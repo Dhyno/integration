@@ -5,6 +5,7 @@ import { API } from '../config/api'
 import { Container, Table, Image, Modal, Row, Col } from "react-bootstrap";
 import { doneStatus, cancelStatus, userImages, Transaction } from '../containerExport/exportModule';
 import TableData from "../components/atomic/adminData/TableData";
+import DetailTransaction from "../components/atomic/adminData/DetailTransaction";
 
 export default function AdminData(){
 
@@ -59,7 +60,7 @@ export default function AdminData(){
             </Table>
             <Modal show={showModal} centered onHide={handleCloseModal} className='d-flex align-items-center'>
                 <Row className='d-flex align-items-center bg-soft-red py-4 px-4 order-border'>
-                    <Transaction data={transactionModal}/>
+                    <DetailTransaction data={transactionModal}/>
                 </Row>
             </Modal>
         </Container>
