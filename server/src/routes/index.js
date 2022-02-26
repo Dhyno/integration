@@ -12,7 +12,7 @@ const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction,
     getDetailTransactionByToken} = require('../controller/transaction');
 
 const { getFixTransactions, addFixTransactions, changeFixTransaction, getDetailFixTransactions } = require('../controller/fix_transaction');
-const { changeName, reloadProfile } = require('../controller/user');
+const { changeName, reloadProfile, changeImage } = require('../controller/user');
 
 const { testFunc } = require('../controller/test');
 
@@ -55,7 +55,8 @@ router.patch('/fix_transaction/:id', changeFixTransaction);
 router.post('/register', register)
 router.post('/login', login)
 
-router.patch('/profile',auth, changeName);//dont know why with auth is unauthorized
+router.patch('/profileimage',auth ,uploadFile("image"), changeImage);//chang user image
+router.patch('/profile',auth, changeName);//change user name
 router.get('/profilereload',auth,reloadProfile)//to render in profile page when user change his/her data
 
 //list of add route match with design fe

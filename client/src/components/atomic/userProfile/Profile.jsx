@@ -30,7 +30,7 @@ export default function Profile(){
         },
     };
 
-
+    //change name user
     const handleChange = async e =>{
         if(e.which==0x0D){
             if(e.target.value.length<5){
@@ -45,12 +45,24 @@ export default function Profile(){
         }
     }
 
-    const handleImage = e => {
+    //change imag of user
+    const handleImage = async ( e ) => {
         let imageFile=e.target.files[0];
-        // setImage(imageFile)
 
         let url = URL.createObjectURL(imageFile);
         setShowData({...showData, image: url});
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,//decode token to get id that current login
+                "Content-type": "multipart/form-data",
+            },
+        };
+
+        let formFile= new FormData();
+        formFile.set("image", imageFile);
+        const response = await API.patch('/profileimage', formFile, config);
+        console.log(response);
     }
 
 
