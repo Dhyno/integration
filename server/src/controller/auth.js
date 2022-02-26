@@ -122,21 +122,3 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.changeName = async (req, res) => {
-  try{
-
-    console.log(req.params.name);
-    console.log(req.user);
-
-    res.status(200).send({
-      status: "success"
-    })
-
-  } catch(error){
-    console.log(error);
-    res.status(500).send({
-      status: "failed",
-      message: error
-    })
-  }
-}

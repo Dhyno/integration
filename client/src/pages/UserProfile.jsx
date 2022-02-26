@@ -36,7 +36,7 @@ export default function UserProfile(){
                             transaction.map( (data)=>{
                                 return(
                                     <Carousel.Item className="overflow-visible">
-                                        <Row className='d-flex align-items-center bg-soft-red py-4 px-4 order-border'>
+                                        <Row className='d-flex over align-items-center bg-soft-red py-4 px-4 order-border'>
                                             <Transaction data={data}/>
                                         </Row>
                                     </Carousel.Item>

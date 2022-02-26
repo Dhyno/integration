@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 //Ccontroller
-const { register, login, changeName } = require('../controller/auth')
+const { register, login } = require('../controller/auth')
 const { addProduct, changeProduct, delProduct, getDetailProduct, getProducts } = require('../controller/product')
 const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } = require('../controller/topping');
 const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
@@ -12,6 +12,7 @@ const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction,
     getDetailTransactionByToken} = require('../controller/transaction');
 
 const { getFixTransactions, addFixTransactions, changeFixTransaction, getDetailFixTransactions } = require('../controller/fix_transaction');
+const { changeName, reloadProfile } = require('../controller/user');
 
 const { testFunc } = require('../controller/test');
 
@@ -53,7 +54,9 @@ router.patch('/fix_transaction/:id', changeFixTransaction);
 
 router.post('/register', register)
 router.post('/login', login)
-router.post('/profile', changeName);
+
+router.patch('/profile',auth, changeName);//dont know why with auth is unauthorized
+router.get('/profilereload',auth,reloadProfile)//to render in profile page when user change his/her data
 
 //list of add route match with design fe
 router.get('/transactionbytoken',auth,getDetailTransactionByToken)

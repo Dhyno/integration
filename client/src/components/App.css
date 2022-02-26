@@ -207,18 +207,22 @@ tr,td,th{
 
 .status1{
   background-color: rgba(255, 153, 0,0.2);
+  border-radius: 6px;
 }
 
 .status2{
   background-color: rgba(120, 168, 90,0.1);
+  border-radius: 6px;
 }
 
 .status3{
  background: rgba(232, 57, 57,0.1);
+ border-radius: 6px;
 }
 
 .status4{
   background-color: rgb(0, 209, 255,0.1);
+  border-radius: 6px;
 }
 
 .edit-profile{
@@ -228,12 +232,63 @@ tr,td,th{
 
 .input-profile{
   border-radius: 20px;
-  border: 1px solid rgb(161, 157, 157);
+  border: 2px solid #ec8484;
   outline: none;
+  margin: 10px 0;
   padding: 2px 10px;
+}
+
+.over{
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.label-profile{
+  transition: 0.6s ease;
+  border-radius: 6px;
+  padding: 0.8em 0;
+  background: #ec8484;
+}
+
+.text-label{
+  margin-top: 18px;
+  color: white;
+  margin-right: 8px;
+  transition: 0.6s ease;
+}
+
+.icon-profile{
+  height: 26px;
 }
 
 .modal-next:hover{
   opacity: 60%;
   color: black;
+}
+
+.status1:hover,.status2:hover,.status3:hover,.status4:hover{
+  color: white;
+}
+.status1:hover{
+  background-color: rgba(255, 153, 0,1);
+}
+
+.status2:hover{
+  background-color: rgba(120, 168, 90,1);
+}
+
+.status3:hover{
+ background: rgba(232, 57, 57,1);
+}
+
+.status4:hover{
+  background-color: rgb(0, 209, 255,1);
+}
+
+.label-profile:hover{
+  background: #ebbdbd;
+}
+
+.label-profile:hover .text-label{
+  color: #974A4A;
 }
