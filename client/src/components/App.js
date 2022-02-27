@@ -5,7 +5,7 @@ import './App.css';
 import PrivateRoute from '../route/PrivateRoute';
 
 import { BrowserRouter as Router, Route, Routes, Link }from 'react-router-dom';
-import { Header, Landing, DetailProduct,UserChart, AdminData, AddProductAdmin,AddTopingAdmin, UserProfile } from '../containerExport/forApp'
+import { Header, Landing, DetailProduct,UserChart, AdminData, AddProductAdmin,AddTopingAdmin, UserProfile, Delivery } from '../containerExport/forApp'
 import { ProductContextProvider } from '../context/productContext';
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
         <Header />
         <Routes>
             <Route path="/" element={ <Landing /> }></Route>
+            <Route path="/delivery" element={ <Delivery /> }></Route>
             <Route path="/" element={ <PrivateRoute /> } >
               <Route path="/user" element={ <UserProfile /> }></Route>
               <Route path="/userchart" element={ <UserChart /> }></Route>

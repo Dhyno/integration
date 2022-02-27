@@ -1,7 +1,8 @@
 import React,{useContext, useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Image, Button,Form, Modal } from "react-bootstrap";
 import { UserTotalChartRender, FormUserChart, TotalPrice, userChartOrder } from '../containerExport/exportModule'
-import { useNavigate } from "react-router-dom";
+import UserChartPageEmpty from "../components/emptyPage/UserChartPageEmpty";
 import { dataLogin } from "../data/orderDataDumies/dataLogin";
 import { API } from "../config/api";
 import { ProductContext } from "../context/productContext";
@@ -17,6 +18,8 @@ export default function UserChart(){
     const [totalProduct,setTotalProduct]=useState([]);//for total product in eacth componen UserTotalChartRender
     const [allTotal,setAllTotal]=useState({});//for total price component
     const [attachment, setAttachment]=useState(null);//get image attachment from user
+
+    const [emptyPage, setEmptyPage]=useState(false);
 
     //for modal
     const handleCloseProcess = () =>{
@@ -92,33 +95,38 @@ export default function UserChart(){
     }
     useEffect(()=>{
         // console.log("in userchar: "+productState.idTransaction)
-        getData();
+        productState.idTransaction!==null ? getData() : setEmptyPage(true);
     },[])
     
     return(
-        <Container className='text-red'>
-            <h2>My Chart</h2>
-            <h5 className='pb-2'>Review Your Order</h5>
-            <Row className='d-flex justify-content-between'>
-                <Col md={7} className='border-top b-red'>
-                    { product.map( ( data,indeks )  => <UserTotalChartRender 
-                        getKeyId={(id)=>confirmDeleteProduct(id)}
-                        total={totalProduct[indeks]} 
-                        data={ data }/> ) 
-                    }
-                    <TotalPrice getImage = { image=>setAttachment(image) } data={allTotal} />
-                </Col>
-                <Col md={4}>
-                    <Form onSubmit={(e)=>handleSubmit(e)}>
-                        <FormUserChart />
-                        <Button type='submit' className='bg-red text-light fw-bold w-100'>Pay</Button>
-                    </Form>
-                </Col>
-            </Row>
+        <>
+        {emptyPage ? <UserChartPageEmpty />
+            :
+            <Container className='text-red'>
+                <h2>My Chart</h2>
+                <h5 className='pb-2'>Review Your Order</h5>
+                <Row className='d-flex justify-content-between'>
+                    <Col md={7} className='border-top b-red'>
+                        { product.map( ( data,indeks )  => <UserTotalChartRender 
+                            getKeyId={(id)=>confirmDeleteProduct(id)}
+                            total={totalProduct[indeks]} 
+                            data={ data }/> ) 
+                        }
+                        <TotalPrice getImage = { image=>setAttachment(image) } data={allTotal} />
+                    </Col>
+                    <Col md={4}>
+                        <Form onSubmit={(e)=>handleSubmit(e)}>
+                            <FormUserChart />
+                            <Button type='submit' className='bg-red text-light fw-bold w-100'>Pay</Button>
+                        </Form>
+                    </Col>
+                </Row>
 
-            <Modal show={showProcess} centered onHide={handleCloseProcess} className='d-flex align-items-center'>
-                <Modal.Body><p className='text-center pt-4 pb-2 text-order px-2'>Thank you for ordering in us, please wait to verify you order</p></Modal.Body>
-            </Modal>
-        </Container>
+                <Modal show={showProcess} centered onHide={handleCloseProcess} className='d-flex align-items-center'>
+                    <Modal.Body><p className='text-center pt-4 pb-2 text-order px-2'>Thank you for ordering in us, please wait to verify you order</p></Modal.Body>
+                </Modal>
+            </Container>
+        }
+        </>
     );
 }

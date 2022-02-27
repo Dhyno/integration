@@ -6,5 +6,6 @@ import AdminData from '../pages/AdminData';
 import AddProductAdmin from '../pages/AddProductAdmin';
 import UserProfile from '../pages/UserProfile';
 import AddTopingAdmin from '../pages/AddTopingAdmin';
+import Delivery from '../pages/Delivery';
 
-export { Header, Landing, DetailProduct,UserChart, AdminData, AddProductAdmin, UserProfile, AddTopingAdmin };
+export { Header, Landing, DetailProduct,UserChart, AdminData, AddProductAdmin, UserProfile, AddTopingAdmin,Delivery };

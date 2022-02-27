@@ -42,21 +42,21 @@ export default function PopData(props){
                 </Row></>
 
             : <>
-            <Row className="py-4 mb-2 d-flex align-items-center border-bottom border-2">
-                <Col md={3}><Image src={popImage.addProduct}></Image></Col>
-                <Col md={9}><h2 onClick={ ()=> redirectPage("/addproduct") } className="cursor-p pop-t">Add Product</h2></Col>
+            <Row className="py-2 mb-2 d-flex align-items-center border-bottom border-2">
+                <Col md={3}><Image className="pop-img" src={popImage.addProduct}></Image></Col>
+                <Col md={9}><h5 onClick={ ()=> redirectPage("/addproduct") } className="cursor-p">Add Product</h5></Col>
             </Row>
-            <Row className="py-4 mb-2 border-bottom border-2">
-                <Col md={3}><Image src={popImage.addToping}></Image></Col>
-                <Col md={9}><h2 onClick={ ()=> redirectPage("/addtopping") } className="cursor-p pop-t">Add Toping</h2></Col>
+            <Row className="py-2 mb-2 border-bottom border-2">
+                <Col md={3}><Image className="pop-img" src={popImage.addToping}></Image></Col>
+                <Col md={9}><h5 onClick={ ()=> redirectPage("/addtopping") } className="cursor-p">Add Toping</h5></Col>
             </Row>
-            <Row className="py-4 mb-2 border-bottom border-2">
-                <Col md={3}><Image src={popImage.addToping}></Image></Col>
-                <Col md={9}><h2 onClick={ ()=> redirectPage("/admindata") } className="cursor-p pop-t">Transaction</h2></Col>
+            <Row className="py-2 mb-2 border-bottom border-2">
+                <Col md={3}><Image className="pop-img" src={popImage.transaction}></Image></Col>
+                <Col md={9}><h5 onClick={ ()=> redirectPage("/admindata") } className="cursor-p">Transaction</h5></Col>
             </Row>
-            <Row className='pt-4 px-2 pb-2 mb-2'>
-                <Col md={3}><Image src={popImage.logOutIcon}></Image></Col>
-                <Col md={9} onClick={ ()=> redirectPage("/","logout") } className="cursor-p pop-t" ><h2>Logout</h2></Col>
+            <Row className='px-2'>
+                <Col md={3}><Image className="pop-img" src={popImage.logOutIcon}></Image></Col>
+                <Col md={9} onClick={ ()=> redirectPage("/","logout") } className="cursor-p" ><h5>Logout</h5></Col>
             </Row> </>}
             
         </div>

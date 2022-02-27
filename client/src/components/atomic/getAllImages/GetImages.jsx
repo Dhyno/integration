@@ -26,6 +26,7 @@ import profileIcon from '../../../assets/icons/popUp/user.svg'
 import logOutIcon from '../../../assets/icons/popUp/logout.svg'
 import addProduct from '../../../assets/icons/popUp/addProduct.svg'
 import addToping from '../../../assets/icons/popUp/addToping.svg'
+import transaction from '../../../assets/icons/popUp/transaction.png'
 
 
 
@@ -33,6 +34,6 @@ const landingImages={navIcon ,mainLandingImg, palmCofee,greenCofee,hinamiCofee,c
 const topingImages={bubleTea ,manggo , greenCoconut, bobbaManggo ,blueberryBobba ,kiwiPearl,matchaCataloppe,strawberry};
 const userImages={navIcon,profile,qrTransaction,productTransaction,TransactionIcon};
 const headerUserImage={basket,user};
-const popImage={profileIcon,logOutIcon,addProduct,addToping};
+const popImage={profileIcon,logOutIcon,addProduct,addToping,transaction};
 
 export {landingImages,topingImages,userImages,headerUserImage,popImage};
