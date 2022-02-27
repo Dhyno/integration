@@ -1,5 +1,7 @@
-import React,{ useState } from "react";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
+import React,{ useState, useEffect } from "react";
+import { Container, Row, Col, Image, Form, Modal, Button } from "react-bootstrap";
+
+import ListTopping from "../components/atomic/addToppingAdm/ListTopping";
 
 import productImage from '../assets/images/largeImages/product-hero.svg';
 import AddProduct from "../components/atomic/addProductAdm/AddProduct";
@@ -11,6 +13,14 @@ export default function AddTopingAdmin(){
 
     const [image, setImage]=useState(null);
     const [preview,setPreview]=useState(null);
+
+    const [toppingList, setToppingList]=useState([]);
+
+    const [modalSucess, setmodalSucess] = useState(false);
+    const handleCloseModalSuccess = () => setmodalSucess(false);
+    const handleShowModalSuccess = () => setmodalSucess(true);
+
+    const [notifModal, setNotifModal]=useState('')
 
     const submitFile = async e => {
 
@@ -31,6 +41,9 @@ export default function AddTopingAdmin(){
 
         const response = await API.post("/topping", formFile, config);
         console.log(response)
+        handleShowModalSuccess();
+        setNotifModal("success add topping");
+        getData();
 
     }
 
@@ -42,9 +55,17 @@ export default function AddTopingAdmin(){
         setPreview(url);
     }
 
+    const getData = async ()=>{
+        const response= await API.get('/toppings');
+        console.log(response);
+        setToppingList(response.data.data.toppings);
+    }
+
+    useEffect(()=> getData(),[])
+
     return(
         <Container>
-            <Row className='d-flex justify-content-between'>
+            <Row className='d-flex justify-content-between mb-5'>
                 <Col>
                     <h2 className='text-red fw-bold'>Toping</h2>
                     <Form onSubmit={(e) => submitFile(e)}>
@@ -65,9 +86,28 @@ export default function AddTopingAdmin(){
                     </Form>
                 </Col>
                 <Col md={6}>
-                    <Image src={preview? preview : productImage}></Image>
+                    <Image className="img-fluid" src={preview? preview : productImage}></Image>
                 </Col>
             </Row>
+
+            <Modal show={modalSucess} size="sm" centered onHide={handleCloseModalSuccess} className='py-5'>
+                <Modal.Body className="text-center"> 
+                    <h4 className=' mb-4 fw-bold text-soft-red'>{notifModal}</h4>
+                    <span className='fw-bold opacity-50 cursor-p modal-next fw-bold cursor-p py-2 px-4 bg-soft-red mb-4' onClick={handleCloseModalSuccess}> ok</span> 
+                </Modal.Body>
+            </Modal>
+
+            {
+                toppingList.map( data => <ListTopping 
+                    reRender={()=>{
+                        setNotifModal("success delete topping");
+                        getData();
+                        handleShowModalSuccess();
+                    }} 
+                    data={data}
+                />)
+            }
+
         </Container>
     );
 }

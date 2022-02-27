@@ -110,7 +110,7 @@ export default function DetailProduct(){
                             <p className="mb-5 fs-4 text-soft-red">{productDetail.price}</p>
                             <h5 className="mb-5 fw-bold fs-4 text-soft-red">Toping</h5>
                         </Col>
-                        <Row className='mb-5'>
+                        <Row className='mb-5 topping-cnt'>
                             { toppings.map( ( data ) => <TopingRender 
                                 price={(val)=> setTotal(total+val)} 
                                 passId={(id,action)=> getToppingId(id, action)}

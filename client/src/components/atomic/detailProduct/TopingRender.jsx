@@ -31,7 +31,7 @@ export default function TopingRender( { data, getChange,keyvalue,price, passId }
         <>
             <Col onClick={eventToogle} md={3} className='text-center toping-cnt'>
                 {checkList && <Image src={doneStatus} className='done-img'></Image>}
-                <Image src={data.image}></Image>
+                <Image className="topping-img" src={data.image}></Image>
                 <p className='text-center'>{data.name}</p>
             </Col>
         </>

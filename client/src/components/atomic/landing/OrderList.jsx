@@ -12,7 +12,7 @@ export default function OrderList( { dataProduct, keyvalue, getclickkey } ){
   return(
     <>
       <div keyvalue={keyvalue} onClick={()=>getNavigate(keyvalue)} className='text-red bg-soft-red order-border'>
-        <img src={dataProduct.image} className='w-100'></img>
+        <img src={dataProduct.image} className='w-100 img-fluid img-p-landing'></img>
         <div className='px-4 py-2'>
             <h5 className='fw-bold'>{dataProduct.name}</h5>
             <h6 className='text-soft-red'>Rp.{dataProduct.price}</h6>

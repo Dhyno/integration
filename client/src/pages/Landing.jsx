@@ -1,13 +1,17 @@
-import {Container, Row, Col } from 'react-bootstrap';
-import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ModalComponent from '../components/atomic/ModalComponent';
-import { landingImages, productList, OrderList} from '../containerExport/exportModule';
-import { dataLogin } from '../data/orderDataDumies/dataLogin';
 import { UserContext } from '../context/userContextt';
-import { API } from '../config/api';
+import { useState, useContext, useEffect } from 'react';
 import { ProductContext } from '../context/productContext';
+
+import {Container, Row, Col } from 'react-bootstrap';
+
+import { API } from '../config/api';
+import ServerError from '../components/emptyPage/ServerError';
+import ModalComponent from '../components/atomic/ModalComponent';
+import UnauthorizedAdmin from '../components/emptyPage/UnauthorizedAdmin';
 import ModalConfirmUserOrder from '../components/atomic/landing/ModalConfirmUserOrder';
+
+import { landingImages, productList, OrderList} from '../containerExport/exportModule';
 
 export default function Landing(){
 
@@ -25,8 +29,14 @@ export default function Landing(){
     
     const [showWarning,setShowWarning]=useState( { modal: false, idProduct: null});//modal show to user he/she have already order before
 
+    const [unauthorized, setUnauthorized]=useState(false);//if admin make order block him/her
+    const [serverError, setServerError]= useState(false)//if server get truble
+
     const getClickKey =  keyval => {
         if(state.isLogin){
+            if(state.user.rule != 'USER'){
+                return setUnauthorized(true);
+            }
             if(productState.haveOrder){
                 return setShowWarning({idProduct: keyval,modal: true});//show modal warning and pass idproduct to it and in modal navigate to detail product that have pass to it
             } else{
@@ -38,38 +48,57 @@ export default function Landing(){
     
     //get data product from api when first load
     useEffect(async ()=>{
-        const response=await API.get('/products');
-        setProduct(response.data.data.products);
+        try{
+            const response=await API.get('/products');
+            setProduct(response.data.data.products);
+        } catch(error){
+            setServerError(true)
+        }
+        
     },[])
 
     return(
         <Container className='py-5'>
-            <Row className='mb-5'>
-                <Col xs lg={10}>
-                    <div class="jumbotron jumbotron-md bg-red py-5 px-4 d-flex align-items-center order-border">
-                        <div class="container text-light px-5">
-                            <h1 class="display-5 fw-bold">WAYSBUCKS</h1>
-                            <p class="lead">Things are changing, but we re still here for you</p>
-                            <p className='w-50 opacity-50'>We have temporarily closed our in-store cafes, but select grocery and drive-thru locations remaining open.<span className='fw-bold opacity-100'>Waysbuck</span> Drivers is also available</p>
-                            <p>Let s Order...</p>
-                        </div>
-                        <img src={landingImages.mainLandingImg} className='main-landing-img'></img>
-                    </div>
-                </Col>
-            </Row>
-            <Row className='text-red mb-5'>
-                <h1>Lets Order</h1>
-            </Row>
-            <Row>
-                { product.map((data)=>{
-                    return(
-                        <Col md={3} className='cursor-p' onClick={handleModal} >
-                            <OrderList getclickkey={(keyval)=> getClickKey(keyval)} keyvalue={data.id} dataProduct={data} />
-                        </Col> 
-                    );
+            {serverError ? <ServerError />
+                :
+                <>
+                    {unauthorized ? <UnauthorizedAdmin deactive={()=>setUnauthorized(false)}/>
+                        :
+                        <>
+                            <Row className='mb-5'>
+                                <Col xs lg={10}>
+                                    <div class="jumbotron jumbotron-md bg-red py-5 px-4 d-flex align-items-center order-border">
+                                        <div class="container text-light px-5">
+                                            <h1 class="display-5 fw-bold">WAYSBUCKS</h1>
+                                            <p class="lead">Things are changing, but we re still here for you</p>
+                                            <p className='w-50 opacity-50'>We have temporarily closed our in-store cafes, but select grocery and drive-thru locations remaining open.
+                                                <span className='fw-bold opacity-100'>Waysbuck</span>
+                                                 Drivers is also available
+                                            </p>
+                                            <p>Let s Order...</p>
+                                        </div>
+                                        <img src={landingImages.mainLandingImg} className='main-landing-img'></img>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className='text-red mb-5'>
+                                <h1>Lets Order</h1>
+                            </Row>
+                            <Row>
+                                { product.map((data)=>{
+                                    return(
+                                        <Col md={3} className='cursor-p mb-5' onClick={handleModal} >
+                                            <OrderList getclickkey={(keyval)=> getClickKey(keyval)} keyvalue={data.id} dataProduct={data} />
+                                        </Col> 
+                                    );
+                                    }
+                                )}
+                            </Row>
+                        </>
                     }
-                )}
-            </Row>
+                </>
+            }
+
             {showModal && <ModalComponent 
                 deactivemodal={()=>{    
                     resetModalLogin();

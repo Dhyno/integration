@@ -13,7 +13,7 @@ export default function AddProduct({ isChange }){
                 <Form.Control type="number" name="price" className='border-2 b-red bg-soft-red' placeholder="Price" />
             </Form.Group>
             <Form.Group  className="mb-5 w-100 bg-soft-red border border-2 b-red px-2 d-flex justify-content-between align-items-center" controlId="exampleForm.ControlInput1">
-                <p className='text-secondary'>Photo Product</p>
+                <p className='text-secondary mt-2'>Photo Product</p>
                 <Form.Label for='picture'>
                     <Image src={fileIcon}></Image>
                 </Form.Label>

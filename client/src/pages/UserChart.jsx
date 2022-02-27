@@ -106,7 +106,7 @@ export default function UserChart(){
                 <h2>My Chart</h2>
                 <h5 className='pb-2'>Review Your Order</h5>
                 <Row className='d-flex justify-content-between'>
-                    <Col md={7} className='border-top b-red'>
+                    <Col md={7} className='border-top b-red chart-item'>
                         { product.map( ( data,indeks )  => <UserTotalChartRender 
                             getKeyId={(id)=>confirmDeleteProduct(id)}
                             total={totalProduct[indeks]} 

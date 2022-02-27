@@ -4,13 +4,11 @@ import { Container, Popover, OverlayTrigger, Navbar, Nav, Button, Modal, Form, I
 import { landingImages, headerUserImage } from '../atomic/getAllImages/GetImages';
 import PopData from './PopData';
 import { dataLogin } from '../../data/orderDataDumies/dataLogin';
-import { topingOrder } from '../../data/orderDataDumies/topping';
 import ModalComponent from '../atomic/ModalComponent';
 import { UserContext } from '../../context/userContextt';
 import { ProductContext } from '../../context/productContext';
 
 export default function Header(){
-
     const navigate=useNavigate();
 
     const [showModal, setModal] = useState(false);
@@ -60,7 +58,7 @@ export default function Header(){
                                 
                             </Nav.Link>
                             <OverlayTrigger show={showPop} trigger='click' placement="bottom" overlay={popover}>
-                                <Nav.Link><Image src={headerUserImage.user} onClick={handleShowToolTip}></Image></Nav.Link>
+                                <Nav.Link><Image className="user-header-img" src={state.user.image} onClick={handleShowToolTip}></Image></Nav.Link>
                             </OverlayTrigger></>
 
                         :

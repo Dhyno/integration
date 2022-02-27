@@ -129,10 +129,10 @@ td p{
   padding: 0 1em!important;
   font-weight: 850;
 }
-/* 
-tr,td,th{
+
+.tr,.td,.th{
   border: 1px solid black;
-} */
+}
 
 .bg-soft{
   background: rgba(224, 200, 200, 0.25);
@@ -317,6 +317,11 @@ tr,td,th{
   width: 40%;
 }
 
+.page-empty1{
+  width: 40%;
+  margin-top: -100px;
+}
+
 .transaction-btn{
   border-style: none;
   color: white;
@@ -333,6 +338,43 @@ tr,td,th{
 
 .pop-img{
   width: 29px;
+}
+
+.list-p-adm{
+  height: 50px;
+  height: 50px;
+  border-radius: 8px;
+}
+
+.l-product{
+  /* border: 1px solid rgba(223, 118, 118, 0.432); */
+  box-shadow: 5px 5px 20px #fcbfbf;
+}
+
+.img-p-landing{
+  height: 329px;
+}
+
+.topping-cnt{
+  max-height: 290px;
+  overflow-y: scroll;
+}
+
+.topping-img{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
+.chart-item{
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.user-header-img{
+  height: 58px;
+  width: 58px;
+  border-radius: 50%;
 }
 
 .modal-next:hover{
@@ -387,4 +429,13 @@ tr,td,th{
 
 .admin-send:hover,.transaction-btn:hover{
   background: #974A4A;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: rgb(241, 57, 33);
+  border-radius: 20px;
 }

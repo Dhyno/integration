@@ -38,40 +38,40 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
     return(
         <>
         <tr className="text-center">
-            <td>{keyValue}</td>
-            <td>{transaction.name}</td>
-            <td>{transaction.address}</td>
-            <td>{transaction.postCode}</td>
-            <td className="income">{transaction.income}</td>
+            <td className="td">{keyValue}</td>
+            <td className="td">{transaction.name}</td>
+            <td className="td">{transaction.address}</td>
+            <td className="td">{transaction.postCode}</td>
+            <td className="income td">{transaction.income}</td>
 
             { status.success && (
                     <>
-                        <td className="success-status fw-bold">Success</td>
-                        <td className="text-center"><Image src={doneStatus}></Image></td>
+                        <td className="success-status td fw-bold">Success</td>
+                        <td className="td text-center"><Image src={doneStatus}></Image></td>
                     </>
                 )
             }
 
             { status.cancel && (
                     <>
-                        <td className="cancel-status fw-bold">Cancel</td> 
-                        <td className="text-center"><Image src={cancelStatus}></Image></td>
+                        <td className="cancel-status td fw-bold">Cancel</td> 
+                        <td className="td text-center"><Image src={cancelStatus}></Image></td>
                     </>
                 )
             }
             
             { status.onTheWay &&(
                     <>
-                        <td className="way-status">On The Way</td>
-                        <td className="text-center"><Image src={doneStatus}></Image></td>
+                        <td className="td way-status">On The Way</td>
+                        <td className="td text-center"><Image src={doneStatus}></Image></td>
                     </>
                 )
             }
 
             { status.waiting && (
                 <>
-                    <td onClick={ ()=>showTransaction(keyValue-1) } className="wait-status fw-bold cursor-p">Waiting Approve</td>
-                    <td className="text-center py-1">
+                    <td onClick={ ()=>showTransaction(keyValue-1) } className="td wait-status fw-bold cursor-p">Waiting Approve</td>
+                    <td className="td text-center py-1">
                         <p onClick={ ()=> confirmTrans("Cancel") }  className="cancel order-border cursor-p">Cancel</p>
                         <p onClick={ ()=> confirmTrans("On The Way") } className="approve order-border cursor-p">Approve</p>
                     </td>

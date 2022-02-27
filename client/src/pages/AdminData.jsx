@@ -40,14 +40,14 @@ export default function AdminData(){
         <Container className='my-5'>
             <h2 className='text-red mb-5 fw-bold'>Income Transaction</h2>
             <Table>
-                <tr className="text-center">
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Adress</th>
-                    <th>Post Code</th>
-                    <th>Income</th>
-                    <th>Status Code</th>
-                    <th>Action</th>
+                <tr className="text-center tr">
+                    <th className="th" >No</th>
+                    <th className="th">Name</th>
+                    <th className="th">Adress</th>
+                    <th className="th">Post Code</th>
+                    <th className="th">Income</th>
+                    <th className="th">Status Code</th>
+                    <th className="th">Action</th>
                 </tr>
 
                 {
