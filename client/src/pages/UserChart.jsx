@@ -102,7 +102,7 @@ export default function UserChart(){
         <>
         {emptyPage ? <UserChartPageEmpty />
             :
-            <Container className='text-red'>
+            <Container className='text-red my-5'>
                 <h2>My Chart</h2>
                 <h5 className='pb-2'>Review Your Order</h5>
                 <Row className='d-flex justify-content-between'>

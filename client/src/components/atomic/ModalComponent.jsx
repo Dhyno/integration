@@ -60,6 +60,9 @@ export default function ModalComponent(props){
             if(ruleAdmin=="ADMIN"){
                 return navigate('/admindata')
 
+            } else if(ruleAdmin=="DELIVERY"){
+                return navigate('/delivery')
+
             } else if(ruleAdmin=="USER"){//if rule as user then check if user have order before if order exist user must confirm it and blocked to order till confirm previous order
                 const token= localStorage.getItem('token')
                 const config = {

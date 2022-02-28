@@ -15,9 +15,9 @@ function App() {
         <Header />
         <Routes>
             <Route path="/" element={ <Landing /> }></Route>
-            <Route path="/delivery" element={ <Delivery /> }></Route>
             <Route path="/" element={ <PrivateRoute /> } >
               <Route path="/user" element={ <UserProfile /> }></Route>
+              <Route path="/delivery" element={ <Delivery /> }></Route>
               <Route path="/userchart" element={ <UserChart /> }></Route>
               <Route path="/admindata" element={ <AdminData /> }></Route>
               <Route path="/addproduct" element={ <AddProductAdmin /> }></Route>

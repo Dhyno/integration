@@ -10,20 +10,34 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
     const initStatus={ cancel: false, onTheWay: false, success: false, waiting: false }
 
     const sendStatus={};
+    let addRateStatusTable={};
     const confirmTrans = async ( confirmStatus ) => {
         confirmStatus=="Cancel" && setStatus( { ...initStatus, cancel: true } );
         confirmStatus=="On The Way" && setStatus( { ...initStatus, onTheWay: true } );
-        sendStatus.status=confirmStatus;
 
-        const body = JSON.stringify(sendStatus);
+        sendStatus.status=confirmStatus;
+        let body = JSON.stringify(sendStatus);
+
         const config = {
             headers: {
-            "Content-type": "application/json",
+                "Content-type": "application/json",
             },
         };
-        const response = await API.patch(`/fix_transaction/${transaction.id}`, body, config)
-        console.log(response);
-        // console.log(transaction.id);
+        const response = await API.patch(`/fix_transaction/${transaction.id}`, body, config)//to fixtransaction status
+
+        addRateStatusTable={
+            idfix_transaction: transaction.id,
+            idCustomer: transaction.idUser,
+            employeeComment: "ok ready for delivery"
+        }
+        body = JSON.stringify(addRateStatusTable);
+
+        const responseAPI= await API.post('/ratestatus', body, config);
+        console.log(responseAPI);
+
+        // console.log(response);
+        // console.log("id transaction: "+transaction.id);//fix transaction id
+        // console.log("id user: "+transaction.idUser);
         // console.log(confirmStatus);
     }
 
@@ -83,3 +97,7 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
         </>
     )
 }
+
+// "idfix_transaction": 7,
+//  "idCustomer":2,
+//  "employeeComment": "ok ready for delivery"

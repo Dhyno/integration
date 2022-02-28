@@ -1,5 +1,7 @@
+import { useEffect,useState } from 'react';
 import { Container, Col, Row, Image} from 'react-bootstrap';
 
+import { API } from '../config/api'
 import TableDataDelivery from '../components/atomic/delivery/TableData';
 import ComplaintUser from '../components/atomic/delivery/ComplaintUser';
 
@@ -7,6 +9,27 @@ import messageImage from '../assets/icons/message.png'
 import trolleyMessage from '../assets/icons/basket.png';
 
 export default function Delivery(){
+
+    const [dataCustomer, setDataCustomer]=useState([]);
+
+    const getData = async () =>{
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+            },
+        };
+        let statusJson={ 
+            status: 'On The Way' 
+        }
+        const body = JSON.stringify(statusJson);
+        const response = await API.post('/ratestatuses',body,config);
+        setDataCustomer(response.data.result);
+        console.log(dataCustomer);
+    }
+
+    useEffect(()=>{
+        getData();
+    },[])
 
     return(
         <Container className="mb-5 del-cnt">
@@ -50,7 +73,7 @@ export default function Delivery(){
                     </Row>
 
                     <Row>
-                        <TableDataDelivery />
+                        <TableDataDelivery data={dataCustomer}/>
                         {/* <ComplaintUser /> */}
                     </Row>
                 </Col>

@@ -292,3 +292,52 @@ exports.changeFixTransaction = async (req, res) => {
     }
 }
 
+
+// exports.getStatusByCondition = async ( req, res) => {
+//     try{
+
+//         let result = await fix_transaction.findAll({
+//             include:[
+//                 {
+//                     model: user,
+//                     as: "user",
+//                     attributes: {
+//                         exclude: ['createdAt','updatedAt','password']
+//                     }
+//                 },
+//             ],
+//             where: {
+//                 status: req.body.status
+//             }
+//         })
+
+//          result=result.map( data => {
+//             return{
+//                 id: data.id,
+//                 idTransaction: data.idTransaction,
+//                 idUser: data.idUser,
+//                 status: data.status,
+//                 income: data.income,
+//                 name: data.name,
+//                 email: data.email,
+//                 phone: data.phone,
+//                 postCode: data.phone,
+//                 user: {
+//                     name: data.user.name,
+//                     image: process.env.FILE_PATH+data.user.image,
+//                 }
+//             }
+//          })
+
+//         res.status(200).send({
+//             message: "success",
+//             result
+//         })
+
+//     } catch(error){
+//         console.log(error);
+//         res.send({
+//             status: "failed",
+//         })
+//     }
+// }

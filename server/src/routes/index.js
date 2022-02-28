@@ -7,12 +7,12 @@ const { register, login } = require('../controller/auth')
 const { addProduct, changeProduct, delProduct, getDetailProduct, getProducts } = require('../controller/product')
 const { addToping, getToppings, getDetailTopping, changeToping, deleteToping } = require('../controller/topping');
 const { addTransaction, getTransaction, getDetailTransaction, deleteTransaction, myTransaction, 
-    editsTransaction, deleteOneProductTransaction, addOneProductTransaction, 
-    delOneProductTransactionById, 
-    getDetailTransactionByToken} = require('../controller/transaction');
+        editsTransaction, deleteOneProductTransaction, addOneProductTransaction, 
+        delOneProductTransactionById, getDetailTransactionByToken} = require('../controller/transaction');
 
 const { getFixTransactions, addFixTransactions, changeFixTransaction, getDetailFixTransactions } = require('../controller/fix_transaction');
 const { changeName, reloadProfile, changeImage } = require('../controller/user');
+const { getRateStatus, getDetailRateStatus, employeeComment, addRateStatus, customerComment, getStatusByCondition } = require('../controller/rating_status');
 
 const { testFunc } = require('../controller/test');
 
@@ -60,7 +60,18 @@ router.patch('/profile',auth, changeName);//change user name
 router.get('/profilereload',auth,reloadProfile)//to render in profile page when user change his/her data
 
 //list of add route match with design fe
-router.get('/transactionbytoken',auth,getDetailTransactionByToken)
+router.get('/transactionbytoken',auth,getDetailTransactionByToken)//to check if user have order before
+
+
+router.get('/ratestatus', getRateStatus);
+router.get('/ratestatus/:id',getDetailRateStatus)//when user get cancel status from admin and she/he want to know why. get by idtransaction
+router.patch('/ratestatus/:id',employeeComment)//change employee message from admin/delivery
+router.patch('/ratestatuses/:id', customerComment)//user give rate and comment when product has arrive or status is success
+router.post('/ratestatus',addRateStatus)//add new row when admin give status is it cancel or approve
+router.post('/ratestatuses', getStatusByCondition)//for get all status by condition body is it cancel,xuccess, etc
+
+
+
 
 router.get('/test',auth, testFunc);
 

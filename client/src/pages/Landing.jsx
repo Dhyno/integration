@@ -33,16 +33,16 @@ export default function Landing(){
     const [serverError, setServerError]= useState(false)//if server get truble
 
     const getClickKey =  keyval => {
+        
         if(state.isLogin){
-            if(state.user.rule != 'USER'){
-                return setUnauthorized(true);
-            }
+
+            if(state.user.rule != 'USER'){ return setUnauthorized(true) }//if not user then block order for her/him
+
             if(productState.haveOrder){
                 return setShowWarning({idProduct: keyval,modal: true});//show modal warning and pass idproduct to it and in modal navigate to detail product that have pass to it
             } else{
                 navigate(`/detailproduct/${keyval}`)
             }
-
         }
     }//if login true then navigate to detail product page
     
@@ -51,11 +51,12 @@ export default function Landing(){
         try{
             const response=await API.get('/products');
             setProduct(response.data.data.products);
-        } catch(error){
-            setServerError(true)
-        }
-        
+            
+        } catch(error){ setServerError(true) }
     },[])
+
+    //if page unauthorized is render but admin logout then watch islogin in global if alse then set home back to early
+    useEffect( () => !state.isLogin && setUnauthorized(false), [state.isLogin] );
 
     return(
         <Container className='py-5'>

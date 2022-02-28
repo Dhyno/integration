@@ -377,6 +377,13 @@ td p{
   border-radius: 50%;
 }
 
+.order-side,.message-side{
+  background: linear-gradient(to right,transparent,transparent);
+  border-radius: 21px 0 0 21px;
+  border-left: 2px solid transparent;
+  transition: 0.6s ease!important;
+}
+
 .modal-next:hover{
   opacity: 60%;
   color: black;
@@ -409,15 +416,8 @@ td p{
   color: #974A4A;
 }
 
-.order-side:hover{
+.order-side:hover,.message-side:hover{
   background: linear-gradient(to right,rgb(247, 88, 68),white);
-  border-radius: 21px 0 0 21px;
-  color: rgb(146, 50, 37);
-  border-left: 2px solid white;
-}
-.message-side:hover{
-  background: linear-gradient(to right,rgb(247, 88, 68),white);
-  border-radius: 21px 0 0 21px;
   color: rgb(146, 50, 37);
   border-left: 2px solid white;
 }
