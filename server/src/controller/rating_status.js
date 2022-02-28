@@ -153,6 +153,7 @@ exports.getStatusByCondition = async ( req, res) => {
                 idfix_transaction: data.idTransaction,
                 idCustomer: data.idCustomer,
                 fix_transaction:{
+                    id: data.fix_transaction.id,
                     status: data.fix_transaction.status,
                     total: data.fix_transaction.income,
                     name: data.fix_transaction.name,

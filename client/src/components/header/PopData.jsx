@@ -14,8 +14,12 @@ export default function PopData(props){
     const [state, dispatch] = useContext(UserContext);//get is admin or customer
     const [productState, dispatchProduct] = useContext(ProductContext)
     const [isAdmin,setisAdmin]=useState(false);
+    const [isDelivery,setisDelivery]=useState(false);
 
-    useEffect( ()=> state.user.rule=="ADMIN" ? setisAdmin(true) : setisAdmin(false), [] )//to get is admin or no when first load if is admin show component admin and if user show comoponent user
+    useEffect( ()=> {
+        state.user.rule=="ADMIN" ? setisAdmin(true) : setisAdmin(false)
+        state.user.rule=="DELIVERY" && setisDelivery(true);
+    }, [] )//to get is admin or no when first load if is admin show component admin and if user show comoponent user
 
     const navigate=useNavigate();
 
@@ -34,7 +38,11 @@ export default function PopData(props){
             !isAdmin ?<>
                 <Row className="py-4 px-2 mb-2 border-bottom border-2">
                     <Col md={4}><Image src={popImage.profileIcon}></Image></Col>
-                    <Col md={8}><h2 onClick={ ()=> redirectPage("/user") } className="cursor-p">Profile</h2></Col>
+                    { isDelivery ?
+                        <Col md={8}><h2 onClick={ ()=> redirectPage("/delivery") } className="cursor-p">Dashboard</h2></Col>
+                        :
+                        <Col md={8}><h2 onClick={ ()=> redirectPage("/user") } className="cursor-p">Profile</h2></Col>
+                    }
                 </Row>
                 <Row className='pt-4 px-2 pb-2 mb-2'>
                     <Col md={4}><Image src={popImage.logOutIcon}></Image></Col>

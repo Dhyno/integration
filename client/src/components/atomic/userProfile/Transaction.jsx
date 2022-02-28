@@ -1,25 +1,35 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Image, Carousel } from "react-bootstrap";
+import { Row, Col, Image, Carousel, Modal } from "react-bootstrap";
+import { API } from "../../../config/api";
 import { userImages } from "../getAllImages/GetImages";
 
 
 //componen use for page prodile user and admin page
 export default function Transaction( { data } ){
 
+    const [comment, setComment]=useState('');//message from employe comment to show fr user
+    const [showComment, setShowComment] = useState(false);
+    const handleCloseComment = () => setShowComment(false);
+    const handleShowComment = () => setShowComment(true);
+
     const [order, setOrder]=useState([])
     const [totalOne, setTotalOne]=useState([]);
     const [status, setStatus]=useState({});
 
-    const show = ()=> {
-        // order.map( data => {
-        //     console.log(data.toppings);
-        // }) 
+    //show modal to user that comment from admin/delivery
+    const show = async ()=> {
+        const response= await API.get(`/ratestatus/${data.id}`);
+        setComment(response.data.result.employeeComment);
+        handleShowComment();
+        // console.log(data.id);
     }
 
     useEffect(()=> {
         data.status=="Waiting Approve" && setStatus({waiting:true});
         data.status=="Cancel" && setStatus({cancel:true});
         data.status=="On The Way" && setStatus({onTheWay:true});
+        data.status=="Success" && setStatus({success:true});
+        data.status=="Pending" && setStatus({pending:true});
 
         setOrder(data.order)
         let totalAll=[];
@@ -79,10 +89,11 @@ export default function Transaction( { data } ){
                 </Row>
                 <Row>
                     <Col>
-                        { status.success && <p onClick={show} className={`fs-8 success-status status2 py-2 fw-bold`}>Success</p> }
-                        { status.cancel && <p onClick={show} className={`fs-8 cancel-status status3 py-2 fw-bold`}>Cancel</p> }
-                        { status.onTheWay && <p onClick={show} className={`fs-8 way-status status4 py-2 fw-bold`}>On The Way</p> }
-                        { status.waiting && <p onClick={show} className={`fs-8 wait-status status1 py-2 fw-bold`}>Process</p> }
+                        { status.success && <p className={`fs-8 success-status status2 py-2 fw-bold cursor-p`}>Success</p> }
+                        { status.pending && <p onClick={show} className={`fs-8 pending-status status5 py-2 fw-bold cursor-p`}>Pending</p> }
+                        { status.cancel && <p onClick={show} className={`fs-8 cancel-status status3 py-2 fw-bold cursor-p`}>Cancel</p> }
+                        { status.onTheWay && <p className={`fs-8 way-status status4 py-2 fw-bold`}>On The Way</p> }
+                        { status.waiting && <p className={`fs-8 wait-status status1 py-2 fw-bold`}>Process</p> }
                         <p className='fs-8 text-soft-red fw-bold'>Total : {data.income}</p>
                     </Col>
                 </Row>
@@ -92,6 +103,13 @@ export default function Transaction( { data } ){
                     </Col>
                 </Row>
             </Col>
+
+            <Modal show={showComment} size="md" centered onHide={handleCloseComment} className='py-2'>
+                <Modal.Body className="text-end">
+                    <h6 className="text-start my-5">{comment}</h6>
+                    <button onClick={handleCloseComment} type="submit" class="admin-send fw-bold my-2 px-4">OK</button>
+                </Modal.Body>
+            </Modal> 
         </>
     );
 }

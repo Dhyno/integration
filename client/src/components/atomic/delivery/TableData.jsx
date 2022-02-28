@@ -1,67 +1,108 @@
-import { Row, Col, Image } from "react-bootstrap";
+import { useState,useEffect } from "react";
+import { Row, Col, Image, Modal,Form } from "react-bootstrap";
 
 import { doneStatus,cancelStatus, userImages, Transaction } from "../../../containerExport/exportModule";
 import pendingImage from '../../../assets/icons/pending.png';
+import { API } from "../../../config/api";
 
 export default function TableDataDelivery( { data } ){
+    
+    const { customer, fix_transaction }=data;
+    // console.log(fix_transaction);
 
-    const test = (key) =>{
-        console.log(key)
+    const [showMessage, setShowMessage] = useState(false);
+    const handleCloseMessage = () => setShowMessage(false);
+    const handleShowMessage = () => setShowMessage(true);
+
+    const [status, setStatus]=useState({});
+    const [statusSend, setStatusSend] = useState('');
+    const initStatus={ pending: false, success: false, ontheway:false, showPendingImg: true }
+
+    const getStatus =  ( confirmStatus ) => {
+        confirmStatus=="Pending" && setStatus( { ...initStatus, pending: true,showPendingImg:true } );
+        confirmStatus=="Success" && setStatus( { ...initStatus, success: true, showPendingImg: false } );
+        setStatusSend(confirmStatus);
+        handleShowMessage();
     }
 
+    const confirmStatus = async e => {
+        e.preventDefault();
+        handleCloseMessage();
+
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+            },
+        };
+
+        let dataComment={
+            message: e.target.message.value
+        }
+
+        let body = JSON.stringify(dataComment);
+
+        const response= await API.patch(`/ratestatus/${fix_transaction.id}`,body, config);
+        console.log(response);
+
+        let sendstatus={
+            status: statusSend
+        }
+        body = JSON.stringify(sendstatus);
+        const responseAPI= await API.patch(`/fix_transaction/${fix_transaction.id}`,body, config)
+        console.log(responseAPI);
+        // dataToSend.
+
+        // console.log(e.target.message.value);
+        // console.log(statusSend);
+        console.log(fix_transaction);
+    }
+    
+    useEffect(()=>{
+        console.log("here");
+        fix_transaction.status=="Pending" && setStatus({pending:true, showPendingImg: true});
+        fix_transaction.status=="Success" && setStatus({success:true, showPendingImg: false});
+        fix_transaction.status=="On The Way" && setStatus({ontheway:true, showPendingImg: true})
+    },[])
+
     return(
-        <Col md={12}>
-            <table cellpadding="10" class="w-100">
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Adress</th>
-                    <th>Date</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th class="text-center">Action</th>
-                </tr>
+        <>
+        <tr class="tb-order text-secondary">
+            <td>1</td>
+            <td className="text-dark fw-bold">
+                <Image className="tb-user-image" src={customer.image}></Image>
+                {fix_transaction.name}
+            </td>
+            <td>{fix_transaction.adress}</td>
+            <td>{fix_transaction.postCode}</td>
+            <td class="income">{fix_transaction.total}</td>
 
-                {
-                    data.map( ( getData, i ) => {
-                        return(
-                            <tr class="tb-order text-secondary">
-                                <td>{ i+1 }</td>
-                                <td className="text-dark fw-bold">
-                                    <Image className="tb-user-image" src={getData.customer.image}></Image>
-                                    {getData.fix_transaction.name}
-                                </td>
-                                <td>{getData.fix_transaction.adress}</td>
-                                <td>{getData.fix_transaction.postCode}</td>
-                                <td className="income">{getData.fix_transaction.total}</td>
-                                <td className="fw-bold way-status">{getData.fix_transaction.status}</td>
-                                <td className="text-center">
-                                    <Image onClick={()=>test(i)} className="status-del-img mx-2 cursor-p" src={pendingImage}></Image>
-                                    <Image className="status-del-img mx-2 cursor-p" src={doneStatus}></Image>
-                                </td>
-                            </tr>
-                        )
-                    })
+            { status.ontheway && <td class="fw-bold way-status">On The Way</td>}
+
+            { status.pending && <td class="fw-bold text-danger">Pending</td>}
+
+            { status.success &&  <td class="success-status fw-bold text-success">Success</td> }
+
+            <td class="text-center">
+                { status.showPendingImg &&
+                    <Image onClick={()=>getStatus('Pending')} className="status-del-img mx-2 cursor-p" src={pendingImage}></Image>
                 }
+                <Image onClick={()=>getStatus('Success')} className="status-del-img mx-2 cursor-p" src={doneStatus}></Image>
+            </td>
+        </tr>
+        
+        
+        <Modal show={showMessage} size="md" centered onHide={handleCloseMessage} className='py-2'>
+            <Modal.Body className="text-end"> 
+                <Form onSubmit={confirmStatus}>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Control name="message" as="textarea" className='bg-orange' rows={5} placeholder="sen message to customer" />
+                        <button type="submit" class="admin-send fw-bold my-2">Send</button>
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+        </Modal> 
 
-                {/* <tr class="tb-order text-secondary">
-                    <td>1</td>
-                    <td className="text-dark fw-bold"><Image className="tb-user-image" src={defaultUser}></Image>sebastian</td>
-                    <td>Adress</td>
-                    <td>Post Code</td>
-                    <td class="income">28000</td>
-                    <td class="wait-status fw-bold text-danger">Pending</td>
-                    <td class="text-center"><Image className="status-del-img" src={pendingImage}></Image></td>
-                </tr>
-                <tr class="tb-order text-secondary">
-                    <td>2</td>
-                    <td className="text-dark fw-bold" ><Image className="tb-user-image" src={defaultUser}></Image>Dhyno</td>
-                    <td>Adress</td>
-                    <td>Post Code</td>
-                    <td class="income">30000</td>
-                    <td class="success-status fw-bold text-success">Success</td>
-                </tr> */}
-            </table>
-        </Col>
+
+        </>
     )
 }

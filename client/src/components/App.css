@@ -31,6 +31,10 @@
   background: rgba(0, 209, 255,0.1);
 }
 
+.bg-orange{
+  background-color: rgba(241, 57, 33, 0.116);
+}
+
 .bg-purple-soft{
   background-color: rgb(143, 186, 241);
 }
@@ -100,6 +104,9 @@
 
 .cancel-status{
  color: #E83939;
+}
+.pending-status{
+ color: rgb(149, 26, 250)
 }
 
 .way-status{
@@ -222,6 +229,10 @@ td p{
 
 .status4{
   background-color: rgb(0, 209, 255,0.1);
+  border-radius: 6px;
+}
+.status5{
+  background-color: rgb(149, 26, 250,0.1);
   border-radius: 6px;
 }
 
@@ -389,7 +400,7 @@ td p{
   color: black;
 }
 
-.status1:hover,.status2:hover,.status3:hover,.status4:hover{
+.status1:hover,.status5:hover,.status2:hover,.status3:hover,.status4:hover{
   color: white;
 }
 .status1:hover{
@@ -406,6 +417,9 @@ td p{
 
 .status4:hover{
   background-color: rgb(0, 209, 255,1);
+}
+.status5:hover{
+  background-color: rgb(149, 26, 250,1);
 }
 
 .label-profile:hover{

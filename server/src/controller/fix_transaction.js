@@ -158,6 +158,7 @@ exports.getDetailFixTransactions= async (req, res) => {
 
         resultToSend=result.map( data => {
             return{
+                id: data.id,
                 idTransaction: data.idTransaction,
                 idUser: data.idUser,
                 status: data.status,

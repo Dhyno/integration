@@ -12,23 +12,23 @@ export default function Delivery(){
 
     const [dataCustomer, setDataCustomer]=useState([]);
 
-    const getData = async () =>{
+    const getData = async status =>{
         const config = {
             headers: {
               "Content-type": "application/json",
             },
         };
         let statusJson={ 
-            status: 'On The Way' 
+            status: status
         }
         const body = JSON.stringify(statusJson);
-        const response = await API.post('/ratestatuses',body,config);
+        const response = await API.post('/ratestatuses',body,config);//get status on the way from table
         setDataCustomer(response.data.result);
-        console.log(dataCustomer);
+        // console.log(response.data);
     }
 
     useEffect(()=>{
-        getData();
+        getData('On The Way');
     },[])
 
     return(
@@ -59,25 +59,41 @@ export default function Delivery(){
                     <h6 class="text-secondary mb-5">28 order found</h6>
                     <Row className="mb-4 d-flex justify-content-start">
                         <Col md={2}>
-                            <h6 class="fw-bold text-soft-red menu1 cursor-p">All order</h6>
+                            <h6 onClick={()=>getData('On The Way')} class="fw-bold text-soft-red menu1 cursor-p">All order</h6>
                         </Col>
                         <Col md={2}>
                             <h6 class="fw-bold text-soft-red menu2 cursor-p">Complaint</h6>
                         </Col>
                         <Col md={2}>
-                            <h6 class="fw-bold text-soft-red menu3 cursor-p">panding</h6>
+                            <h6 onClick={()=>getData("Pending")} class="fw-bold text-soft-red menu3 cursor-p">Pending</h6>
                         </Col>
                         <Col md={2}>
-                            <h6 class="fw-bold text-soft-red menu4 cursor-p">Complete</h6>
+                            <h6 onClick={()=>getData("Success")} class="fw-bold text-soft-red menu4 cursor-p">Complete</h6>
                         </Col>
                     </Row>
 
                     <Row>
-                        <TableDataDelivery data={dataCustomer}/>
-                        {/* <ComplaintUser /> */}
+                        <Col md={12}>
+                            <table cellpadding="10" class="w-100">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Adress</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                                {
+                                    dataCustomer.map( data => <TableDataDelivery data={data}/> )
+                                }
+                            </table>
+                        </Col>
                     </Row>
                 </Col>
             </Row>
+                {/* <TableDataDelivery data={dataCustomer}/> */}
+                {/* <ComplaintUser /> */}
 
         </Container>
     )
