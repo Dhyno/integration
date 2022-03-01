@@ -2,12 +2,13 @@ import { useState,useEffect } from "react"
 import { Image } from "react-bootstrap";
 import { API } from '../../../config/api'
 import { doneStatus,cancelStatus, userImages, Transaction } from "../../../containerExport/exportModule";
+import pendingImage from '../../../assets/icons/pending.png';
 
 
 export default function TableData( { transaction,showTransaction, keyValue } ){
 
     const [status, setStatus]=useState({});
-    const initStatus={ cancel: false, onTheWay: false, success: false, waiting: false }
+    const initStatus={ cancel: false, onTheWay: false, success: false, waiting: false, pending: false }
 
     const sendStatus={};
     let addRateStatusTable={};
@@ -46,6 +47,8 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
         transaction.status=="Waiting Approve" && setStatus({waiting:true});
         transaction.status=="Cancel" && setStatus({cancel:true});
         transaction.status=="On The Way" && setStatus({onTheWay:true});
+        transaction.status=="Success" && setStatus({success:true});
+        transaction.status=="Pending" && setStatus({pending:true});
         // console.log(transaction.status);
     },[])
 
@@ -63,6 +66,14 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
                         <td className="success-status td fw-bold">Success</td>
                         <td className="td text-center"><Image src={doneStatus}></Image></td>
                     </>
+                )
+            }
+
+            { status.pending && ( 
+                <>     
+                    <td class="fw-bold text-danger">Pending</td>
+                    <td className="td text-center"><Image className="pending-img" src={pendingImage}></Image></td>
+                </>
                 )
             }
 
@@ -90,10 +101,11 @@ export default function TableData( { transaction,showTransaction, keyValue } ){
                         <p onClick={ ()=> confirmTrans("On The Way") } className="approve order-border cursor-p">Approve</p>
                     </td>
                 </>
-            )
+                )   
                 
             }
         </tr>
+
         </>
     )
 }

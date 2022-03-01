@@ -6,8 +6,11 @@ import { Container, Table, Image, Modal, Row, Col } from "react-bootstrap";
 import { doneStatus, cancelStatus, userImages, Transaction } from '../containerExport/exportModule';
 import TableData from "../components/atomic/adminData/TableData";
 import DetailTransaction from "../components/atomic/adminData/DetailTransaction";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminData(){
+
+    const navigate=useNavigate();
 
     const [transaction, setTransaction]=useState([]);
     const [transactionModal, setTransactionModal]=useState({})
@@ -58,6 +61,12 @@ export default function AdminData(){
                      />)
                 }
             </Table>
+            <Row className="text-center">
+                <h4 className="fw-bold text-soft-red my-4">See Customer Complaint About Product</h4>
+                <Col>
+                    <button onClick={()=>navigate('/delivery')} class="admin-send fw-bold my-2">Go Now</button>
+                </Col>
+            </Row>
             <Modal show={showModal} centered onHide={handleCloseModal} className='d-flex align-items-center'>
                 <Row className='d-flex align-items-center bg-soft-red py-4 px-4 order-border'>
                     <DetailTransaction data={transactionModal}/>

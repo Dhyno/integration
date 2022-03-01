@@ -8,7 +8,6 @@ import { API } from "../../../config/api";
 export default function TableDataDelivery( { data } ){
     
     const { customer, fix_transaction }=data;
-    // console.log(fix_transaction);
 
     const [showMessage, setShowMessage] = useState(false);
     const handleCloseMessage = () => setShowMessage(false);
@@ -56,13 +55,13 @@ export default function TableDataDelivery( { data } ){
         // console.log(statusSend);
         console.log(fix_transaction);
     }
-    
+
     useEffect(()=>{
-        console.log("here");
         fix_transaction.status=="Pending" && setStatus({pending:true, showPendingImg: true});
         fix_transaction.status=="Success" && setStatus({success:true, showPendingImg: false});
         fix_transaction.status=="On The Way" && setStatus({ontheway:true, showPendingImg: true})
-    },[])
+        fix_transaction.status=="Pending" && setStatus({pending:true, showPendingImg: true})
+    },[data])
 
     return(
         <>
@@ -89,8 +88,7 @@ export default function TableDataDelivery( { data } ){
                 <Image onClick={()=>getStatus('Success')} className="status-del-img mx-2 cursor-p" src={doneStatus}></Image>
             </td>
         </tr>
-        
-        
+            
         <Modal show={showMessage} size="md" centered onHide={handleCloseMessage} className='py-2'>
             <Modal.Body className="text-end"> 
                 <Form onSubmit={confirmStatus}>
@@ -101,7 +99,6 @@ export default function TableDataDelivery( { data } ){
                 </Form>
             </Modal.Body>
         </Modal> 
-
 
         </>
     )

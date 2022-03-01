@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useContext, useEffect,useState } from 'react';
 import { Container, Col, Row, Image} from 'react-bootstrap';
 
 import { API } from '../config/api'
@@ -7,10 +7,15 @@ import ComplaintUser from '../components/atomic/delivery/ComplaintUser';
 
 import messageImage from '../assets/icons/message.png'
 import trolleyMessage from '../assets/icons/basket.png';
+import { UserContext } from '../context/userContextt';
 
 export default function Delivery(){
 
     const [dataCustomer, setDataCustomer]=useState([]);
+    const [isAdmin, setisAdmin]=useState();
+
+    const [state, dispatch] = useContext(UserContext);
+    console.log(state);
 
     const getData = async status =>{
         const config = {
@@ -28,6 +33,7 @@ export default function Delivery(){
     }
 
     useEffect(()=>{
+        state.user.rule=="ADMIN" ? setisAdmin(true) : setisAdmin(false);
         getData('On The Way');
     },[])
 
@@ -58,37 +64,45 @@ export default function Delivery(){
                     <h2 class="fw-bold">Order</h2>
                     <h6 class="text-secondary mb-5">28 order found</h6>
                     <Row className="mb-4 d-flex justify-content-start">
-                        <Col md={2}>
-                            <h6 onClick={()=>getData('On The Way')} class="fw-bold text-soft-red menu1 cursor-p">All order</h6>
-                        </Col>
-                        <Col md={2}>
-                            <h6 class="fw-bold text-soft-red menu2 cursor-p">Complaint</h6>
-                        </Col>
-                        <Col md={2}>
-                            <h6 onClick={()=>getData("Pending")} class="fw-bold text-soft-red menu3 cursor-p">Pending</h6>
-                        </Col>
-                        <Col md={2}>
-                            <h6 onClick={()=>getData("Success")} class="fw-bold text-soft-red menu4 cursor-p">Complete</h6>
-                        </Col>
+                        { isAdmin ? 
+                            <Col md={2}>
+                                <h6 class="fw-bold text-soft-red menu2 cursor-p">Complaint</h6>
+                            </Col>
+                            :
+                            <>
+                                <Col md={2}>
+                                    <h6 onClick={()=>getData('On The Way')} class="fw-bold text-soft-red menu1 cursor-p">All order</h6>
+                                </Col>
+                                <Col md={2}>
+                                    <h6 onClick={()=>getData("Pending")} class="fw-bold text-soft-red menu3 cursor-p">Pending</h6>
+                                </Col>
+                                <Col md={2}>
+                                    <h6 onClick={()=>getData("Success")} class="fw-bold text-soft-red menu4 cursor-p">Complete</h6>
+                                </Col>
+                            </>
+                        }
                     </Row>
 
                     <Row>
-                        <Col md={12}>
-                            <table cellpadding="10" class="w-100">
-                                <tr>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>Adress</th>
-                                    <th>Date</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                                {
-                                    dataCustomer.map( data => <TableDataDelivery data={data}/> )
-                                }
-                            </table>
-                        </Col>
+                        { isAdmin ? <ComplaintUser />
+                            :
+                            <Col md={12}>
+                                <table cellpadding="10" class="w-100">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Adress</th>
+                                        <th>Date</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                    {
+                                        dataCustomer.map( data => <TableDataDelivery data={data} /> )
+                                    }
+                                </table>
+                            </Col>
+                        }
                     </Row>
                 </Col>
             </Row>

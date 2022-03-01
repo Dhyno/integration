@@ -395,6 +395,11 @@ td p{
   transition: 0.6s ease!important;
 }
 
+.pending-img{
+  height: 40px;
+  width: 40px;
+}
+
 .modal-next:hover{
   opacity: 60%;
   color: black;

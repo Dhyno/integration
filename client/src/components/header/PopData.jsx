@@ -39,7 +39,7 @@ export default function PopData(props){
                 <Row className="py-4 px-2 mb-2 border-bottom border-2">
                     <Col md={4}><Image src={popImage.profileIcon}></Image></Col>
                     { isDelivery ?
-                        <Col md={8}><h2 onClick={ ()=> redirectPage("/delivery") } className="cursor-p">Dashboard</h2></Col>
+                        <Col md={8}><h2 onClick={ ()=> redirectPage("/delivery") } className="cursor-p">Order</h2></Col>
                         :
                         <Col md={8}><h2 onClick={ ()=> redirectPage("/user") } className="cursor-p">Profile</h2></Col>
                     }

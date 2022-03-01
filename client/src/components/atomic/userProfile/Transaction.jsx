@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Image, Carousel, Modal } from "react-bootstrap";
+import { Row, Col, Image, Form, Carousel, Modal } from "react-bootstrap";
 import { API } from "../../../config/api";
 import { userImages } from "../getAllImages/GetImages";
 
@@ -12,6 +12,14 @@ export default function Transaction( { data } ){
     const handleCloseComment = () => setShowComment(false);
     const handleShowComment = () => setShowComment(true);
 
+    const [showRate, setShowRate] = useState(false);
+    const handleCloseRate = () => setShowRate(false);
+    const handleShowRate = () => setShowRate(true);
+
+    const [showDone, setShowDone] = useState(false);
+    const handleCloseDone = () => setShowDone(false);
+    const handleShowDone = () => setShowDone(true);
+
     const [order, setOrder]=useState([])
     const [totalOne, setTotalOne]=useState([]);
     const [status, setStatus]=useState({});
@@ -22,6 +30,33 @@ export default function Transaction( { data } ){
         setComment(response.data.result.employeeComment);
         handleShowComment();
         // console.log(data.id);
+    }
+
+    const sendRate = async  e => {
+        e.preventDefault();
+
+        handleCloseRate();
+        handleShowDone();
+
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+            },
+        };
+
+        let customerRate={
+            message: e.target.message.value,
+            rating: e.target.rate.value
+        }
+
+        let body = JSON.stringify(customerRate);
+
+        const response= await API.patch(`/ratestatuses/${data.id}`,body, config);
+        console.log(response);
+
+        // console.log(data.id);
+        // console.log(e.target.message.value);
+        // console.log(e.target.rate.value);
     }
 
     useEffect(()=> {
@@ -89,7 +124,7 @@ export default function Transaction( { data } ){
                 </Row>
                 <Row>
                     <Col>
-                        { status.success && <p className={`fs-8 success-status status2 py-2 fw-bold cursor-p`}>Success</p> }
+                        { status.success && <p onClick={handleShowRate} className={`fs-8 success-status status2 py-2 fw-bold cursor-p`}>Success</p> }
                         { status.pending && <p onClick={show} className={`fs-8 pending-status status5 py-2 fw-bold cursor-p`}>Pending</p> }
                         { status.cancel && <p onClick={show} className={`fs-8 cancel-status status3 py-2 fw-bold cursor-p`}>Cancel</p> }
                         { status.onTheWay && <p className={`fs-8 way-status status4 py-2 fw-bold`}>On The Way</p> }
@@ -110,6 +145,27 @@ export default function Transaction( { data } ){
                     <button onClick={handleCloseComment} type="submit" class="admin-send fw-bold my-2 px-4">OK</button>
                 </Modal.Body>
             </Modal> 
+
+            <Modal show={showDone} size="md" centered onHide={handleCloseDone} className='py-2'>
+                <Modal.Body className="text-center">
+                    <h4 className="my-5">Thank you for rate</h4>
+                    <button onClick={handleCloseDone}  class="admin-send fw-bold my-2 px-4">OK</button>
+                </Modal.Body>
+            </Modal> 
+            
+            <Modal show={showRate} size="md" centered onHide={handleCloseRate} className='py-2'>
+                <Modal.Body className="text-end"> 
+                    <Form onSubmit={sendRate}>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Control name="message" as="textarea" className='bg-orange' rows={5} placeholder="Please give your rate about this" />
+                            <h6 className="fw-bold text-soft-red mt-2 text-start">1 to 100</h6>
+                            <Form.Control name="rate" type="number" min="1" max="100" className="mb-2" />
+                            <button type="submit" class="admin-send fw-bold">Send</button>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+            </Modal> 
+
         </>
     );
 }
