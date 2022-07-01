@@ -1,12 +1,43 @@
 const { ratestatus, user, fix_transaction }=require('../../models/index');
+const { Op }=require('sequelize');
 
 exports.getRateStatus = async ( req, res ) => {
     try{
-        const result = await ratestatus.findAll({
-            attributes: {
-                exclude: ['createdAt','updatedAt']
+        let result = await ratestatus.findAll({
+            attributes: ['createdAt','Commentuser','id'],
+            where: {
+                Commentuser:{
+                    [Op.not]: null,
+                    [Op.not]: ''
+                },
             },
+            include:[
+                {
+                    model: user,
+                    required: true,
+                    as: "customer",
+                    attributes: ['image','id']
+                },
+                {
+                    model: fix_transaction,
+                    as: "fix_transaction",
+                    attributes: ['name']
+                }
+            ]
         });
+
+        result=result.map( data =>{
+            return{
+                id: data.id,
+                createdAt: data.createdAt,
+                Commentuser: data.Commentuser,
+                name: data.fix_transaction.name,
+                customer:{
+                    id: data.customer.id,
+                    image: process.env.FILE_PATH+data.customer.image
+                }
+            }
+        })
 
         res.status(200).send({
             message: "success",

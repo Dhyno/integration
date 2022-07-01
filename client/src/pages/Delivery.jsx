@@ -3,7 +3,7 @@ import { Container, Col, Row, Image} from 'react-bootstrap';
 
 import { API } from '../config/api'
 import TableDataDelivery from '../components/atomic/delivery/TableData';
-import ComplaintUser from '../components/atomic/delivery/ComplaintUser';
+import MessageUser from '../components/atomic/delivery/MessageUser';
 
 import messageImage from '../assets/icons/message.png'
 import trolleyMessage from '../assets/icons/basket.png';
@@ -12,10 +12,12 @@ import { UserContext } from '../context/userContextt';
 export default function Delivery(){
 
     const [dataCustomer, setDataCustomer]=useState([]);
-    const [isAdmin, setisAdmin]=useState();
+
+    const [userMessage, setUserMessage]=useState([]);//
+    const [mainMessage, setMainMessage]=useState(null);//
 
     const [state, dispatch] = useContext(UserContext);
-    console.log(state);
+    // console.log(state);
 
     const getData = async status =>{
         const config = {
@@ -32,9 +34,18 @@ export default function Delivery(){
         // console.log(response.data);
     }
 
+    //
+    const getUserMessage = () => {
+        API.get('/ratestatus').then( res =>{
+            console.log(res);
+            setUserMessage(res.data.result);
+            setMainMessage(res.data.result[0])
+        }).catch( err => console.log(err));
+    }
+
     useEffect(()=>{
-        state.user.rule=="ADMIN" ? setisAdmin(true) : setisAdmin(false);
         getData('On The Way');
+        getUserMessage();//
     },[])
 
     return(
@@ -42,31 +53,44 @@ export default function Delivery(){
             <Row>
 
                 <Col md={2} className="side-bg py-5" >
-                    <Row className="row my-5 ms-2 py-2 order-side">
-                        <Col md={3}>
-                            <Image className="side-icon" src={trolleyMessage}></Image>
-                        </Col>
-                        <Col>
-                            <h5>Order</h5>
-                        </Col>
-                    </Row>
-                    <Row className="row ms-2 py-2 message-side">
-                        <Col md={3}>
-                            <Image className="side-icon" src={messageImage}></Image>
-                        </Col>
-                        <Col>
-                            <h5>Message</h5>
-                        </Col>
-                    </Row>
+                    {state.user.rule=="ADMIN"?
+                        <Row className="row ms-2 py-2 message-side">
+                            <Col md={3}>
+                                <Image className="side-icon" src={messageImage}></Image>
+                            </Col>
+                            <Col>
+                                <h5>Message</h5>
+                            </Col>
+                        </Row>
+                        :
+                        <Row className="row my-5 ms-2 py-2 order-side">
+                            <Col md={3}>
+                                <Image className="side-icon" src={trolleyMessage}></Image>
+                            </Col>
+                            <Col>
+                                <h5>Order</h5>
+                            </Col>
+                        </Row>
+                    }
                 </Col>
 
-                <Col>
-                    <h2 class="fw-bold">Order</h2>
-                    <h6 class="text-secondary mb-5">28 order found</h6>
+                <Col className='pt-4'>
+                    { state.user.rule=="ADMIN" ?(
+                            <>
+                                <h2 class="fw-bold">Message</h2>
+                                <h6 class="text-secondary mb-5">{userMessage.length} message</h6>
+                            </>
+                        ) :(
+                            <>
+                                <h2 class="fw-bold">Order</h2>
+                                <h6 class="text-secondary mb-5">{dataCustomer.length} order found</h6>
+                            </>
+                        )
+                    }
                     <Row className="mb-4 d-flex justify-content-start">
-                        { isAdmin ? 
+                        { state.user.rule=="ADMIN" ? 
                             <Col md={2}>
-                                <h6 class="fw-bold text-soft-red menu2 cursor-p">Complaint</h6>
+                                <h6 class="fw-bold text-soft-red menu2 cursor-p">Message</h6>
                             </Col>
                             :
                             <>
@@ -84,7 +108,33 @@ export default function Delivery(){
                     </Row>
 
                     <Row>
-                        { isAdmin ? <ComplaintUser />
+                        { state.user.rule=="ADMIN" ?
+                            <>
+                            <Col md={5}>
+                                {
+                                    userMessage.map( ( data, id)=>(
+                                        <MessageUser 
+                                            key={id}
+                                            data={data}
+                                            changeMsg={()=>setMainMessage(data)}
+                                        />
+                                    ))
+                                }
+                            </Col> 
+                            { mainMessage &&
+                                <Col md={7}>
+                                    <Row className="d-flex align-items-center mb-4">
+                                        <Col md={1}>
+                                            <Image className="tb-user-image" src={mainMessage.customer.image} ></Image>
+                                        </Col>
+                                        <Col md={10}>
+                                            <h6 class="fw-bold">{mainMessage.name}</h6>
+                                        </Col>
+                                    </Row>
+                                    <h6 class="mb-4 text-secondary">{mainMessage.Commentuser}</h6>
+                                </Col>
+                            }
+                            </>
                             :
                             <Col md={12}>
                                 <table cellpadding="10" class="w-100">
