@@ -47,7 +47,7 @@ Run the server :
 npm run start
 ```
 
-get access the server at http://localhost:3000/auth
+get access the server at http://localhost:3000
 
 ## [DEMO](https://waysbuck-rino.netlify.app/)
 
