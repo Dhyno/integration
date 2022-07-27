@@ -51,4 +51,4 @@ get access the server at http://localhost:3000/auth
 
 ## [DEMO](https://waysbuck-rino.netlify.app/)
 
-- (https://github.com/Rino-Saputra/Waysbuck-app/blob/master/client/src/assets/images/Demo/home.png)
+- <img src="./src/assets/images/Demo/home.png">
