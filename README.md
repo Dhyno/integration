@@ -22,3 +22,29 @@
 - Multer
 - Nodemon
 - Cloudinary
+
+Clone the repository :
+
+```
+git clone https://github.com/Pentorch/YouTube-Clone-Redux-Complate
+```
+
+Switch to the repo folder :
+
+```
+cd YouTube-Clone-Redux-Complate
+```
+
+Install all the dependencies using `npm` or you can using `yarn` :
+
+```
+npm install or yarn install
+```
+
+Run the server :
+
+```
+npm run start
+```
+
+get access the server at http://localhost:3000/auth
